@@ -1,0 +1,10 @@
+* {
+    box-sizing: border-box;
+}
+
+.blocked {
+    display: none;
+}
+.showing {
+    display: block;
+}
