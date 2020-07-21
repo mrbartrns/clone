@@ -11,10 +11,11 @@ function deleteToDo(event){
     const btn = event.target;
     const list = btn.parentNode;
     console.log(list);
+    const toDoId = list.id;
     toDoList.removeChild(list);
     //filter function only return if element is true => return array with element
     const cleanToDos = toDos.filter(function(todo){
-        return todo.id !== parseInt(list.id);
+        return todo.id !== parseInt(toDoId);
     })
     console.log(cleanToDos);
     toDos = cleanToDos;
