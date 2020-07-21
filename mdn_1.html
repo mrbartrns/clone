@@ -7,11 +7,24 @@
     <link rel="stylesheet" href="./mdn_1.css">
 </head>
 <body>
-    <div class="game-division">
-        <form class="game">
-            <input class="number-input" type="text" placeholder="Write a number 1 to 100">
-        </form>
-        <ul class="history"></ul>
+    <div class="header">
+        <h1>guess the number!</h1>
+    </div>
+    <div class="flex-container">
+        <div class="game-division">
+            <div class="game-result hidden">
+                <span class="result">This is result region</span>
+            </div>
+            <div class="game-count hidden">
+                <span class="count">This is count region</span>
+            </div>
+            <div class="game-area">
+                <form class="game">
+                    <input class="number-input" type="text" placeholder="Write a number 1 to 100">
+                </form>
+                <ul class="history"></ul>
+            </div>
+        </div>
     </div>
     <script src="./mdn_1.js"></script>
 </body>

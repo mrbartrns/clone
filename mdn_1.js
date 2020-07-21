@@ -9,6 +9,10 @@ const gameForm = document.querySelector(".game");
 const gameInput = gameForm.querySelector("input");
 const ul = document.querySelector(".history");
 const div = document.querySelector(".game-divsion");
+const gameResult = document.querySelector(".game-result");
+const resultSpan = gameResult.querySelector(".result");
+const gameCount = document.querySelector(".game-count");
+const countSpan = gameCount.querySelector(".count");
 let pcNumber = 0;
 let tryCount = 0;
 let history = [];
@@ -27,20 +31,31 @@ function plusCount() {
     countCheck(tryCount);
 }
 
+function paintCount() {
+    countSpan.innerHTML = `시도 횟수: ${tryCount + 1}회<br>`;
+}
+
 /* numbercount function needed */
 function paintCheckValue(userNumber) {
-    numCheckValue = checkUserNumber(userNumber);
+    const numCheckValue = checkUserNumber(userNumber);
+
+    // write count on the result
+    paintCount();
     if (numCheckValue === 0) {
         //write text in the value
+        resultSpan.innerHTML = "정답입니다!<br>";
+        console.log("correct");
         //execute function if game again or done
+        //askGameAgain();
     } else if (numCheckValue === 1) {
-
-    } else if (numCheckValue === 2) {
-
+        resultSpan.innerHTML = "틀렸습니다. 숫자를 더 낮게 추측하세요.<br>";
+    } else if (numCheckValue === 2) {   
+        resultSpan.innerHTML = "틀렸습니다. 숫자를 더 높게 추측하세요.<br>";
     }
     plusCount();
 }
 
+// check the usernumber is same with pcNumber or not
 function checkUserNumber(userNumber) {
     if (userNumber === pcNumber) {
         return 0;
@@ -105,11 +120,12 @@ function paintValue(userNumber) {
 // save the value and valuecheck function, paintfunction
 function handleSubmit(event) {
     event.preventDefault();
-    const currentValue = gameInput.value;
+    const currentValue = parseInt(gameInput.value);
     gameInput.value = ""
     paintValue(currentValue);
     paintCheckValue(currentValue);
 }
+
 function createRandomNumber() {
     //make randomnumber 1~100
     let randomNumber = Math.floor(Math.random() * 100) + 1;

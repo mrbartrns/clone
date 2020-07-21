@@ -6,10 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="greeting">
-        <form>
-            <input class="hi" type="text">
-        </form>
+    <div class="test">
+        <script>
+            const test = document.querySelector(".test");
+            const a = document.createElement("span");
+            test.appendChild(a);
+            a.innerText = "hi";
+            a.innerText = "set";
+
+        </script>
     </div>
 </body>
 </html>
