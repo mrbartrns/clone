@@ -10,7 +10,48 @@ const gameInput = gameForm.querySelector("input");
 const ul = document.querySelector(".history");
 const div = document.querySelector(".game-divsion");
 let pcNumber = 0;
+let tryCount = 0;
 let history = [];
+
+function countCheck(count) {
+    if (count === 10) {
+
+    } else {
+
+    }
+}
+
+//plusCount function get value tryCount and transit to countCheck function
+function plusCount() {
+    tryCount++;
+    countCheck(tryCount);
+}
+
+/* numbercount function needed */
+function paintCheckValue(userNumber) {
+    numCheckValue = checkUserNumber(userNumber);
+    if (numCheckValue === 0) {
+        //write text in the value
+        //execute function if game again or done
+    } else if (numCheckValue === 1) {
+
+    } else if (numCheckValue === 2) {
+
+    }
+    plusCount();
+}
+
+function checkUserNumber(userNumber) {
+    if (userNumber === pcNumber) {
+        return 0;
+    } else {
+        if (userNumber > pcNumber) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+}
 
 function deleteValue(event) {
     const btn = event.target;
@@ -67,7 +108,7 @@ function handleSubmit(event) {
     const currentValue = gameInput.value;
     gameInput.value = ""
     paintValue(currentValue);
-    //valueCheck(currentValue);
+    paintCheckValue(currentValue);
 }
 function createRandomNumber() {
     //make randomnumber 1~100
