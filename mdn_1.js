@@ -28,6 +28,7 @@ function deleteValue(event) {
         element.id = i;
     })
     //initialize id in html
+    //querySelector List CANNOT use the forEach function.
     const liAll = document.querySelectorAll("li");
     for (let i=0; i<liAll.length; i++){
         liAll[i].id = i + 1;
