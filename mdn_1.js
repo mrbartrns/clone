@@ -17,8 +17,26 @@ let pcNumber = 0;
 let tryCount = 0;
 let history = [];
 
+//make reset function complete
+function reset(event) {
+    const btn = event.target;
+    const resultDiv = btn.parentNode;
+    resultDiv.removeChild(btn);
+    pcNumber = 0;
+    tryCount = 0;
+    history = [];
+    gameCount.classList.add("hidden");
+    gameResult.classList.add("hidden");
+}
 function askGameAgain() {
-    
+    setTimeout(() => {
+        resultSpan.innerHTML = "다시 하시겠습니까?"
+        const btn = document.createElement("button")
+        gameResult.appendChild(btn);
+        btn.innerText = "다시 하기"
+        btn.addEventListener("click", reset)
+    }, 2000);
+
 }
 
 function countCheck(count, checkValue) {
@@ -136,6 +154,8 @@ function inputValueCheck(input) {
 // save the value and valuecheck function, paintfunction
 function handleSubmit(event) {
     event.preventDefault();
+    gameResult.classList.remove("hidden");
+    gameCount.classList.remove("hidden");
     const currentValue = parseInt(gameInput.value);
     gameInput.value = ""
     //value check if currentValue is the number or string
