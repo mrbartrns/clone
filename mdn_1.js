@@ -17,26 +17,31 @@ let pcNumber = 0;
 let tryCount = 0;
 let history = [];
 
-function countCheck(count) {
-    if (count === 10) {
+function askGameAgain() {
+    
+}
 
-    } else {
-
+function countCheck(count, checkValue) {
+    if (count === 10 && checkValue !== 0) {
+        resultSpan.innerHTML = "게임 오버!"
+        askGameAgain();
     }
 }
 
 //plusCount function get value tryCount and transit to countCheck function
 function plusCount() {
     tryCount++;
-    countCheck(tryCount);
+    
 }
 
 function paintCount() {
-    countSpan.innerHTML = `시도 횟수: ${tryCount + 1}회<br>`;
+    if (tryCount < 10) {
+        countSpan.innerHTML = `시도 횟수: ${tryCount + 1}회<br>`;
+    }
 }
 
 /* numbercount function needed */
-function paintCheckValue(userNumber) {
+function paintResult(userNumber) {
     const numCheckValue = checkUserNumber(userNumber);
 
     // write count on the result
@@ -45,14 +50,14 @@ function paintCheckValue(userNumber) {
         //write text in the value
         resultSpan.innerHTML = "정답입니다!<br>";
         console.log("correct");
-        //execute function if game again or done
-        //askGameAgain();
+        askGameAgain();
     } else if (numCheckValue === 1) {
         resultSpan.innerHTML = "틀렸습니다. 숫자를 더 낮게 추측하세요.<br>";
     } else if (numCheckValue === 2) {   
         resultSpan.innerHTML = "틀렸습니다. 숫자를 더 높게 추측하세요.<br>";
     }
     plusCount();
+    countCheck(tryCount, numCheckValue);
 }
 
 // check the usernumber is same with pcNumber or not
@@ -93,6 +98,9 @@ function deleteValue(event) {
     console.log(liAll);
     console.log(history);
 }
+function paintError() {
+    resultSpan.innerHTML = `숫자가 아니거나 1~100 사이의 숫자가 아닙니다. 다시 입력하세요.<br>`;
+}
 
 // make history in the html, 
 function paintValue(userNumber) {
@@ -117,13 +125,28 @@ function paintValue(userNumber) {
 
 }
 
+function inputValueCheck(input) {
+    if (typeof(input) === "number") {
+        return input <= 100 && input >= 1;
+    } else {
+        return false;
+    }
+}
+
 // save the value and valuecheck function, paintfunction
 function handleSubmit(event) {
     event.preventDefault();
     const currentValue = parseInt(gameInput.value);
     gameInput.value = ""
-    paintValue(currentValue);
-    paintCheckValue(currentValue);
+    //value check if currentValue is the number or string
+    const inputCheck = inputValueCheck(currentValue);
+    if (inputCheck) {
+        paintValue(currentValue);
+        paintResult(currentValue);
+    } else {
+        paintError();
+    }
+    
 }
 
 function createRandomNumber() {
