@@ -8,12 +8,23 @@
 <body>
     <div class="test">
         <script>
-            const test = document.querySelector(".test");
-            const a = document.createElement("span");
-            test.appendChild(a);
-            a.innerText = "hi";
-            a.innerText = "set";
-
+           function Person(first, last, age, gender, interests) {
+                this.name = {
+                    first: first,
+                    last: last
+                }
+                this.gender = gender;
+                this.interests = interests;
+           }
+           Person.prototype.farewell = function() {
+               alert(this.name.first + ' has left the building. Bye for now!');
+           }
+           let person1 = new Person('Bob', 'Gimpson', 16, 'male', 'book');
+        function Teacher(first, last, age, gender, interests, subject) {
+            Person.call(this, first, last, age, gender, interests);
+        }
+        Teacher.prototype = Object.create(Person.prototype);
+        Teacher.prototype.constructor = Teacher;
         </script>
     </div>
 </body>
