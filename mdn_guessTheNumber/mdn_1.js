@@ -34,9 +34,9 @@ function reset(event) {
     pcNumber = 0;
     tryCount = 0;
     history = [];
-    resultSpan.innerText = ""
-    countSpan.innerText = ""
     pcNumber = createRandomNumber();
+    console.log(pcNumber);
+    gameForm.classList.remove("hidden");
     gameCount.classList.add("hidden");
     gameResult.classList.add("hidden");
     deleteChild();
@@ -80,6 +80,7 @@ function paintResult(userNumber) {
     if (numCheckValue === 0) {
         //write text in the value
         resultSpan.innerHTML = "정답입니다!<br>";
+        gameForm.classList.add("hidden");
         console.log("correct");
         askGameAgain();
     } else if (numCheckValue === 1) {
