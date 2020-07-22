@@ -17,6 +17,15 @@ let pcNumber = 0;
 let tryCount = 0;
 let history = [];
 
+function deleteChild() {
+    let li = ul.firstElementChild;
+    while (li) {
+        ul.removeChild(li);
+        li = ul.firstElementChild;
+        //or use ul.innerHTML = ""
+    }
+}
+
 //make reset function complete
 function reset(event) {
     const btn = event.target;
@@ -25,8 +34,12 @@ function reset(event) {
     pcNumber = 0;
     tryCount = 0;
     history = [];
+    resultSpan.innerText = ""
+    countSpan.innerText = ""
+    pcNumber = createRandomNumber();
     gameCount.classList.add("hidden");
     gameResult.classList.add("hidden");
+    deleteChild();
 }
 function askGameAgain() {
     setTimeout(() => {
