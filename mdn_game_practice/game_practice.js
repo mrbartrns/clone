@@ -21,6 +21,7 @@ function draw() {
     ctx.fillStyle = `rgba(0, 200, 0, 0.25)`;
     ctx.arc(x, y, size, 0, 2 * Math.PI);
     ctx.fill();
+    ctx.closePath();
 }
 
 function update() {
