@@ -10,7 +10,7 @@ const height = canvas.height = window.innerHeight;
 //this function takes two arguments and returns random number in the range between two
 function random(min, max) {
     const num = Math.floor(Math.random()*(max - min + 1)) + min;
-    return num
+    return num;
 }
 
 /*Since these balls will all behave in the same way, it makes sense to represent them with an object.
