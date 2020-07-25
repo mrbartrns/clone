@@ -16,6 +16,24 @@ let paddleHeight = 10;
 let paddleWidth = 75;
 let paddleX = (width - paddleWidth) / 2;
 
+let brickRowCount = 3;
+let brickColumnCount = 5;
+let brickWidth = 75;
+let brickHeight = 20;
+let brickPadding = 10;
+let brickOffsetTop = 30;
+let brickOffsetLeft = 30;
+
+let bricks = [];
+for (let c=0; c<brickColumnCount; c++) {
+    bricks[c] = [];
+    for (let r=0; r<brickRowCount; r++) {
+        //status는 벽돌을 그릴지 말지 선택하는 것
+        bricks[c][r] = { x: 0, y: 0, status: 1 };
+    }
+}
+console.log(bricks);
+
 function random(min, max) {
     const num = Math.floor(Math.random() * (max - min + 1)) + min;
     return num;
@@ -37,6 +55,37 @@ function drawPaddle() {
     ctx.closePath();    
 }
 
+function drawBricks() {
+    for (let c=0; c<brickColumnCount; c++) {
+        for (let r=0; r<brickRowCount; r++) {
+            if (bricks[c][r].status === 1) {
+                let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                bricks[c][r].x = brickX;
+                bricks[c][r].y = brickY;
+                ctx.beginPath();
+                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                ctx.fillStyle = "0095DD";
+                ctx.fill();
+                ctx.closePath();
+            }
+       }
+    }
+}
+//충돌 판정
+function collisionDetection() {
+    for (let c=0; c<brickColumnCount; c++) {
+        for (let r=0; r<brickRowCount; r++) {
+            let b = bricks[c][r];
+            if (b.status === 1) {
+                if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                }
+            }
+        }
+    }
+}
 function keyDownHandler(event) {
     if (event.keyCode === 39) {
         rightPressed = true;
@@ -56,8 +105,10 @@ function keyUpHandler(event) {
 function draw() {
     //clear previous frame
     ctx.clearRect(0, 0, width, height);
+    drawBricks();
     drawBall();
     drawPaddle();
+    collisionDetection();
     x += dx;
     y += dy;
     if ((x + radius) >= width || (x - radius) <= 0) {
