@@ -29,6 +29,14 @@ function drawBall() {
     ctx.closePath();
 }
 
+function drawPaddle() {
+    ctx.beginPath();
+    ctx.rect(paddleX, height - paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();    
+}
+
 function keyDownHandler(event) {
     if (event.keyCode === 39) {
         rightPressed = true;
@@ -49,15 +57,29 @@ function draw() {
     //clear previous frame
     ctx.clearRect(0, 0, width, height);
     drawBall();
+    drawPaddle();
     x += dx;
     y += dy;
     if ((x + radius) >= width || (x - radius) <= 0) {
         dx = -dx;
         color = `rgba(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)}, 0.25)`;
     }
-    if ((y + radius) >= height || (y - radius) <= 0) {
+    if ((y + dy) <= radius) {
         dy = -dy;
         color = `rgba(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)}, 0.25)`;
+    } else if ((y + dy) > height - radius) {
+        if (x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+            // 패들에 닿았을 때 속도 증가 dx *= 2;
+        } else {
+            alert("GAME OVER");
+            document.location.reload();
+        }
+    }
+    if (rightPressed && paddleX < width - paddleWidth) {
+        paddleX += 7;
+    } else if (leftPressed && paddleX > 0) {
+        paddleX -= 7;
     }
 }
 
