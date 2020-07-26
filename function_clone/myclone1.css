@@ -2,9 +2,45 @@
     box-sizing: border-box;
 }
 
+body, html {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: #333333;
+    background-position: center center;
+    font-style: "Open Sans", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+.center::before{
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 100%;
+    margin-right: 0;
+    vertical-align: middle;
+}
+.center {
+    margin-top: 300px;
+    border: 1px solid grey;
+    text-align: center;
+    justify-content: center;
+    color: white;
+}
+.js-clock {
+    text-align: center;
+    font-size: 7em;
+}
 .blocked {
     display: none;
 }
+
 .showing {
     display: block;
 }
