@@ -7,11 +7,13 @@
     background-color: #24252A;
 }
 
+/*text 속성을 가질 수 있는 것들에다가 폰트 등을 적용*/
 li, a, button {
     font-family: "Montserrat", sans-serif;
     /*font-weight is what I checked on online;*/
     font-weight: 500;
     font-size:  16px;
+    /*font color 지정시 눌르더라도 색이 변하지 않게 됨*/
     color: #edf0f1;
     /*눌렀을때 글자색이 변하거나, 링크에 줄이 쳐져있는 효과 방지*/
     text-decoration: none;
@@ -30,6 +32,7 @@ li, a, button {
 
 .nav_links {
     list-style: none;
+    min-width: 318px;
 }
 
 .nav_links li{
