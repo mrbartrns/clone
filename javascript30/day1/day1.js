@@ -8,7 +8,19 @@ const soundBox = soundContainer.querySelectorAll(".key");
 const audioList = document.querySelectorAll("audio");
 const PLAYING = "playing";
 
-function pauseSoudn(element) {
+/*
+function handleTransitioned(event) {
+    const key = event.keyCode;
+    const stringKey = key.toString();
+    soundBox.forEach(element => {
+        if (element.dataset.key === stringKey) {
+            element.play();
+        }
+    })
+}
+*/
+
+function pauseSound(element) {
     element.pause();
 }
 
@@ -54,8 +66,9 @@ function keyDownHandler(event) {
 
 function main() {
 
-    document.addEventListener("keydown", keyDownHandler)
-    document.addEventListener("keyup", keyUpHandler)
+    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
+    //document.addEventListener("transitionend", handleTransitioned);
     
 }
 
