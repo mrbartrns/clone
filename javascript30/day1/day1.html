@@ -54,6 +54,36 @@
     <audio data-key="74" src="sounds/snare.wav"></audio>
     <audio data-key="75" src="sounds/tom.wav"></audio>
     <audio data-key="76" src="sounds/tink.wav"></audio>
-    <script src="./day1.js"></script>
+    <!--
+        <script src="./day1.js"></script>
+    -->
+    <!--reference-->
+    <script>
+        //키 코드가 무엇인지 모르겠을 때에는 console.log(event)를 property가 무엇인지 확인해본다.
+        function playSound(e) {
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            if (!audio) return; //stop the function from running all together
+            audio.currentTime = 0;
+            audio.play();
+            key.classList.add('playing');
+            /*setTimeout(function(){
+                0.07
+            })*/ //언제 꺼질지 타이머를 설정
+        }
+
+        function removeTransition(e) {
+            if (e.propertyName !== 'transform') return; //skip it if it's not a transform
+            this.classList.remove("playing"); //현재 foreach element
+        }   
+
+        const keys = document.querySelectorAll(".key");
+        //keys are nodelist, not a list, eventlistener를 모든 요소에다가 사용하려면 각 object에 대해 사용해야함.
+        keys.forEach(key => {
+            key.addEventListener("transitionend", removeTransition);
+        })
+        window.addEventListener("keydown",playSound);
+    </script>
+    -->
 </body>
 </html>

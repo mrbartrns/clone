@@ -20,11 +20,9 @@ function handleTransitioned(event) {
 }
 */
 
-function pauseSound(element) {
-    element.pause();
-}
 
 function playSound(element) {
+    element.currentTime = 0; //오디오를 처음부터 다시 재생, 반복해서 누를 수 있게 해줌.
     element.play();
 }
 
@@ -35,13 +33,7 @@ function keyUpHandler(event) {
         if (element.dataset.key === stringKey) {
             element.classList.remove(PLAYING);
         }
-    });
-    audioList.forEach(element => {
-        if (element.dataset.key === stringKey) {
-            paseSound(element);
-        }
-    });
-
+    }); 
 }
 function paintPlaying(element) {
     element.classList.add(PLAYING);
@@ -53,6 +45,7 @@ function keyDownHandler(event) {
     console.log(stringKey);
     soundBox.forEach(element => {
         if (element.dataset.key === stringKey) {
+            console.log("done");
             paintPlaying(element);
         }
     });
