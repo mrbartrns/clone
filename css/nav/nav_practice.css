@@ -21,7 +21,7 @@ li, a, button {
 .header {
     padding: 30px 10%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -44,6 +44,7 @@ li, a, button {
 
 .header img {
     cursor: pointer;
+    margin-right: auto;
 }
 
 .nav_links a{
@@ -56,4 +57,5 @@ li, a, button {
     padding: 9px 25px;
     background-color: rgba(0, 136, 169, 1);
     border-radius: 50px;
+    margin-left: 20px;
 }

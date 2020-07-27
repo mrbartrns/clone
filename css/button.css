@@ -5,3 +5,39 @@
     margin: 0;
     padding: 0;
 }
+
+.container {
+    padding: 30px 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid grey;
+    height: 70px;
+}
+
+button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    background-color: #f4511e;
+    opacity: 0.6;
+    border: 0;
+    border-radius: 0.2rem;
+    padding: 9px 25px;
+    transition: all 0.3s ease 0s;
+    text-align: center;
+}
+button a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+button:hover{
+    opacity: 1;
+}
+
+button a:hover {
+    color: black;
+}
