@@ -31,6 +31,7 @@ h6 {
     border: 1px solid grey;
     text-align: center;
     justify-content: center;
+    align-items: center;
     color: white;
 }
 .js-clock {
