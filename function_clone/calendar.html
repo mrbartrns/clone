@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="calendar-title">
+        <h1>calendar</h1>
+    </div>
+    <div class="calendar-div">
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>SUN</th>
+                    <th>MON</th>
+                    <th>TUE</th>
+                    <th>WED</th>
+                    <th>THU</th>
+                    <th>FRI</th>
+                    <th>SAT</th>
+                </tr>
+            </thead>
+            <tbody class="date"></tbody>
+        </table>
+    </div>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        table, th, td {
+            border: 1px solid grey;
+        }
+    </style>
+    <script>
+        const dateProperty = new Date();
+        const date = dateProperty.getDate();
+        const day = dateProperty.getDay();
+        const month = dateProperty.getMonth();
+        const year = dateProperty.getFullYear();
+        const calendarDiv = document.querySelector(".calendar-div");
+        const calendar = document.querySelector(".calendar");
+        const dateDiv = calendar.querySelector(".date");
+
+        function paintHoliday() {
+            const tbody = document.querySelector("tbody");
+            const dates = tbody.querySelectorAll("td");
+            for (let i=0; i<dates.length; i++) {
+                if (i % 7 === 0) {
+                    dates[i].style.color = "red";
+                }
+            }
+        }
+
+        function getLastDay(year, month) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+
+        function drawNumber() {
+            const tbody = document.querySelector("tbody");
+            const dates = tbody.querySelectorAll("td");
+            const firstDay = dateProperty.getDay(dateProperty.setDate(1));
+            let start = 1;
+            let lastDate = getLastDay(year, month);
+            dates[firstDay].innerHTML = "1<br>";
+            for (let i=firstDay; i<lastDate+firstDay; i++) {
+                if (!dateProperty.setDate(start)) {
+                    return;
+                } else {
+                    dates[i].innerHTML = `${start}`;
+                    start++;
+                }    
+            }
+        }
+
+        function makeCalendar() {            
+            for (let i=0; i<5; i++) {
+                const tr = document.createElement("tr");
+                for (let j=0; j<7; j++) {
+                    const span = document.createElement("span");
+                    const td = document.createElement("td");
+                    td.appendChild(span);
+                    tr.appendChild(td);
+                }
+                dateDiv.appendChild(tr);
+                tr.classList.add(i);
+            }
+        }
+
+        function main(){
+            makeCalendar();
+            drawNumber();
+            paintHoliday();
+        }
+
+        main();
+    </script>
+</body>
+</html>
