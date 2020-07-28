@@ -4,6 +4,7 @@ const width = canvas.width;
 const height = canvas.height;
 let rightPressed = false;
 let leftPressed = false;
+let score = 0;
 
 let x = width / 2;
 let y = height - 30;
@@ -81,11 +82,24 @@ function collisionDetection() {
                 if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
                     dy = -dy;
                     b.status = 0;
+                    score++;
+                    if (score === brickColumnCount * brickRowCount) {
+                        alert("YOU WIN, CONGRATULATIONS!");
+                        document.location.reload();
+                    }
                 }
             }
         }
     }
 }
+
+//캔버스에 배치될 좌표
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Score: "+ score, 8, 20);
+}
+
 function keyDownHandler(event) {
     if (event.keyCode === 39) {
         rightPressed = true;
@@ -102,12 +116,21 @@ function keyUpHandler(event) {
     }
 }
 
+function mouseMoveHandler(event) {
+    let relativeX = event.clientX - canvas.offsetLeft;
+    if (relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth / 2;
+    }
+    console.log(relativeX);
+}
+
 function draw() {
     //clear previous frame
     ctx.clearRect(0, 0, width, height);
     drawBricks();
     drawBall();
     drawPaddle();
+    drawScore();
     collisionDetection();
     x += dx;
     y += dy;
@@ -136,4 +159,5 @@ function draw() {
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
 setInterval(draw, 10);

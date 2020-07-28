@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="clock">
+        <div class="clock-face">
+            <div class="hand hour-hand"></div>
+            <div class="hand min-hand"></div>
+            <div class="hand second-hand"></div>
+        </div>
+    </div>
+    <style>
+        html {
+            background: #018DED
+            url(https://unsplash.it/1500/1000?image=881&blur=5);
+            background-size: cover;
+            font-family: 'helvetica neue';
+            text-align: center;
+            font-size: 10px;
+        }
+
+        body {
+            margin: 0;
+            font-size: 2rem;
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            align-items: center;
+        }
+        
+        .clock {
+            width: 30rem;
+            height: 30rem;
+            border: 20px solid white;
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem;
+            box-shadow: 
+            0 0 0 4px rgba(0, 0, 0, 0.1),
+            inset 0 0 0 3px #EFEFEF,
+            inset 0 0 0 10px black,
+            0 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .clock-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: translateY(-3px);
+        }
+
+        .hand {
+            width: 50%;
+            height: 6px;
+            background: black;
+            position: absolute;
+            top: 50%;
+            transform-origin: center right;
+            transform: rotate(90deg);
+            transition: all 0.05s;
+            transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+        }
+
+    </style>
+    <script>
+        //시계바늘은 1분동안 6도, 초침은 1초에 6도, 시침은 1분에 0.5도 움직임
+        /*접근 방법?
+        1. 시간을 얻는다. 그리고 시간을 받으면, 초침과 분침은 초가 변할때 마다 움직이고,
+        시침은 분이 변할때 마다 움직인다.*/
+        const hourHand = document.querySelector(".hour-hand");
+        const minHand = document.querySelector(".min-hand");
+        const secHand = document.querySelector(".second-hand");
+
+        function paintHand(hours, minutes, seconds) {
+            const secHandDegree = 90 + seconds * 6;
+            const minHandDegree = 90 + minutes * 6 + seconds * 0.1;
+            const hourHandDegree = 90 + hours * 30 + minutes * 0.5;
+            secHand.style.transform = `rotate(${secHandDegree}deg)`;
+            minHand.style.transform = `rotate(${minHandDegree}deg)`;
+            hourHand.style.transform = `rotate(${hourHandDegree}deg)`;
+        }
+
+        function getTime() {
+            //date가 getTime 내부에 있어야지 hours, minutes, seconds가 업데이트됨
+            const date = new Date();
+            const hours = date.getHours();
+            const minutes = date.getMinutes();
+            const seconds = date.getSeconds();
+            paintHand(hours, minutes, seconds);  
+        }
+
+        function main() {
+            getTime();
+            setInterval(getTime, 1000)
+        }
+
+        main();
+        
+
+    </script>
+</body>
+</html>

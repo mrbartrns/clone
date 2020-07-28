@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./day1.css">
+    <title>day1 practice</title>
 </head>
 <body>
     <div class="keys">
@@ -54,36 +53,75 @@
     <audio data-key="74" src="sounds/snare.wav"></audio>
     <audio data-key="75" src="sounds/tom.wav"></audio>
     <audio data-key="76" src="sounds/tink.wav"></audio>
-    <!--
-        <script src="./day1.js"></script>
-    -->
-    <!--reference-->
-    <script>
-        //키 코드가 무엇인지 모르겠을 때에는 console.log(event)를 property가 무엇인지 확인해본다.
-        function playSound(e) {
-            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-            if (!audio) return; //stop the function from running all together
-            audio.currentTime = 0;
-            audio.play();
-            key.classList.add('playing');
-            /*setTimeout(function(){
-                0.07
-            })*/ //언제 꺼질지 타이머를 설정
+    <style>
+        html {
+            font-size: 10px;
+            background: url(https://i.imgur.com/b9r5sEL.jpg) bottom center;
+            background-size: cover;
         }
 
-        function removeTransition(e) {
-            if (e.propertyName !== 'transform') return; //skip it if it's not a transform
-            this.classList.remove("playing"); //현재 foreach element
-        }   
+        body,html {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
 
-        const keys = document.querySelectorAll(".key");
-        //keys are nodelist, not a list, eventlistener를 모든 요소에다가 사용하려면 각 object에 대해 사용해야함.
-        keys.forEach(key => {
-            key.addEventListener("transitionend", removeTransition);
+        .keys {
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .key {
+            border: .4rem solid black;
+            border-radius: .5rem;
+            margin: 1rem;
+            font-size: 1.5rem;
+            padding: 1rem .5rem;
+            transition: all .07s ease;
+            width: 10rem;
+            text-align: center;
+            color: white;
+            background: rgba(0,0,0,0.4);
+            text-shadow: 0 0 .5rem black;
+        }
+
+        .playing {
+            transform: scale(1.1);
+            border-color: #ffc600;
+            box-shadow: 0 0 1rem #ffc600;
+        }
+
+        kbd {
+            display: block;
+            font-size: 4rem;
+        }
+
+        .sound {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: .1rem;
+            color: #ffc600;
+        }
+    </style>
+    <script>
+        function removeTransition(e) {
+            if(e.propertyname !== 'transform') return;
+            this.classList.remove("playing");
+        }
+
+        window.addEventListener("keydown", function (e){
+            const audio = document.querySelector(`audio[data-key]="${e.keyCode}"`);
+            const key = document.querySelector(`.key[data-key]="${e.keyCode}"`);
+            if(!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+            key.classList.add("playing");
         });
-        window.addEventListener("keydown",playSound);
+        const keys = document.querySelectorAll(".key");
+        keys.forEach(key => {key.addEventListener("transitionend", removeTransition)});
     </script>
-    -->
 </body>
 </html>
