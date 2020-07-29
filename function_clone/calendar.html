@@ -11,6 +11,10 @@
         <h1>calendar</h1>
     </div>
     <div class="calendar-div">
+        <div class="controls">
+            <button type="button" class="calbutton"><a>이전</a></button>
+            <button type="button" class="calbutton"><a>다음</a></button>
+        </div>
         <table class="calendar">
             <thead>
                 <tr>
@@ -30,9 +34,10 @@
         * {
             box-sizing: border-box;
         }
-        
+        .calendar-title {
+            display: flex;
+        }
         .calendar-div {
-            margin-left: auto;
             align-items: center;
             justify-content: center;
         }
@@ -41,6 +46,37 @@
             border: 1px solid grey;
             text-align: center;
         }
+        a {
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            color: black;
+        }
+
+        .red a {
+            color: red;
+        }
+        .calbutton {
+            background-color: #f4511e;
+            opacity: 0.6;
+            border: 0;
+            border-radius: 0.2rem;
+            padding: 9px 25px;
+            transition: all 0.3s ease 0s;
+            text-align: center;
+        }
+
+        .calbutton:hover {
+            opacity: 1;
+            color: black;
+        }
+
+        .calbutton a {
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
     </style>
     <script>
         const dateProperty = new Date();
@@ -52,12 +88,16 @@
         const calendar = document.querySelector(".calendar");
         const dateDiv = calendar.querySelector(".date");
 
+        function getPrevious() {
+            
+        }
+
         function paintHoliday() {
             const tbody = document.querySelector("tbody");
             const dates = tbody.querySelectorAll("td");
             for (let i=0; i<dates.length; i++) {
                 if (i % 7 === 0) {
-                    dates[i].style.color = "red";
+                    dates[i].classList.add("red");
                 }
             }
         }
@@ -72,7 +112,7 @@
 
         function drawNumber() {
             const tbody = document.querySelector("tbody");
-            const dates = tbody.querySelectorAll("td");
+            const dates = tbody.querySelectorAll("a");
             //const firstDay = dateProperty.getDay(dateProperty.setDate(1));
             const firstDay = dateProperty.getDay(getFirstDay(year, month));
             let start = 1;
@@ -83,6 +123,7 @@
                     return;
                 } else {
                     dates[i].innerHTML = `${start}`;
+                    dates[i].setAttribute("href", "#");
                     start++;
                 }    
             }
@@ -92,9 +133,9 @@
             for (let i=0; i<5; i++) {
                 const tr = document.createElement("tr");
                 for (let j=0; j<7; j++) {
-                    const span = document.createElement("span");
+                    const a = document.createElement("a");
                     const td = document.createElement("td");
-                    td.appendChild(span);
+                    td.appendChild(a);
                     tr.appendChild(td);
                 }
                 dateDiv.appendChild(tr);
@@ -106,7 +147,10 @@
             makeCalendar();
             drawNumber();
             paintHoliday();
-        }
+            const monthButtons = document.querySelectorAll(".calbutton");
+            monthButtons[0].addEventListener("click", getPrevious);
+            monthButtons[1].addEventListener("click", getNext);
+                }
 
         main();
     </script>
