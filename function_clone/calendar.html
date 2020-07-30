@@ -88,8 +88,17 @@
         const calendar = document.querySelector(".calendar");
         const dateDiv = calendar.querySelector(".date");
 
+        let nMonth = month;
+        let nYear = year;
+
         function getPrevious() {
-            
+            nMonth --;
+            if (nMonth === 0) {
+                nMonth = 12;
+                nYear --;
+            }
+            drawNumber(nMonth, nYear);
+            paintHoliday();
         }
 
         function paintHoliday() {
@@ -110,7 +119,7 @@
             return new Date(year, month + 1, 0).getDate();
         }
 
-        function drawNumber() {
+        function drawNumber(year, month) {
             const tbody = document.querySelector("tbody");
             const dates = tbody.querySelectorAll("a");
             //const firstDay = dateProperty.getDay(dateProperty.setDate(1));
@@ -145,7 +154,7 @@
 
         function main(){
             makeCalendar();
-            drawNumber();
+            drawNumber(year, month);
             paintHoliday();
             const monthButtons = document.querySelectorAll(".calbutton");
             monthButtons[0].addEventListener("click", getPrevious);
