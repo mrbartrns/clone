@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //배열 원소들의 합 구하기
+        const num = [1, 2, 3, 4, 5]
+        const total1 = num.reduce( (result, current) => {result += current;
+        return result}, 0); //result의 초기 구조
+        console.log(total1);
+
+        //dictionary의 수량의 전체 합 구하기
+        const dict = [{quntity: 1}, {quntity: 2}, {quntity: 1}];
+        const total2 = dict.reduce( (result, current) => {
+            result += current['quntity']; //쓸때 꼭 '' 붙여야 함
+            //or
+            /*
+            result += current.quntity 이렇게 쓰면 ''안붙여도됨
+            */
+            return result;
+        }, 0);
+        console.log(total2);
+
+        //배열 원소들 중 최댓값 구하기
+        const max = num.reduce((result, current) =>{
+            if (result <= current) {
+                result = current;
+            }
+            return result;
+            /*
+            or result = Math.max(result, current); -Infinity;
+            */
+        }, 0);
+        console.log(max);
+
+        //배열 안에 배열이 있는 원소들 펼치기
+        const arrinarr= [[0, 1], [2, 3], [4, 5]];
+        const flattend = arrinarr.reduce((result, current) => {
+            //result.concat(current);
+            for (let i=0; i<current.length; i++) {
+                result.push(current[i]);
+            }
+           return result;
+        }, []);
+        console.log(flattend);
+
+        //배열을 딕셔너리로 구현하기1
+        const rr = ["lion", "tiger"];
+        const rd = rr.reduce((result, current) => {
+            result[current] = current;
+            return result;
+        }, {})
+        console.log(rd);
+
+        //배열을 딕셔너리로 구현하기2
+        const alpha = ['A', 'B', 'A', 'A', 'B'];
+        const beta = alpha.reduce((result, current) =>{
+            if (!result[current]) {
+                result[current] = 1;
+            } else {
+                result[current] += 1;
+            }
+            return result;
+        }, {});
+        console.log(beta);
+        
+        //딕셔너리(키: 값)에서 비어있는 경우 필터링하기
+        const params = {"hobby": "", "address": "seoul"};
+        //키값을 모아서 리스트를 만들어줌
+        const filteredParams = Object.keys(params).reduce((result, current) => {
+            if (params[current]) {
+                result[current] = params[current];
+            }
+            return result;
+        }, {});
+        console.log(filteredParams);
+        //or
+        const filteredParams2 = Object.entries(params).filter(([key, value]) => value !== "")
+                                                      .reduce((result, [key, value]) => {
+                                                        ({... result, [key]: value})
+                                                    }, {})
+        /*or reduce((result, [key, value]) => {
+            result[key] = value;
+        }, {})*/
+
+    </script>
+</body>
+</html>
