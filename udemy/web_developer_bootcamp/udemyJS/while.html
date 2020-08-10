@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>While Loops Probelm Set</h1>
+    <ol>
+        <li>Print all numbers between -10 and 19</li>
+        <li>Print all even numbwers between 10 and 40</li>
+        <li>Print all odd numbers between 300 and 333</li>
+        <li>Print all numbers divisible by 5 and 3 between 5 and 50</li>
+    </ol>
+    <script>
+        let num1 = -10;
+        let num2 = 10;
+        let num3 = 300;
+        let num4 = 5;
+        
+        while (num1 < 20) {
+            console.log(num1);
+            num1++;
+        }
+
+        while (num2 <= 40) {
+            if (num2 % 2 === 0){
+                console.log(num2);
+            }
+            num2++;
+        }
+        
+        while (num3 < 334) {
+            if (num3 % 2 === 1) {
+                console.log(num3);
+            }
+            num3++;
+        }
+
+        while (num4 <= 50) {
+            if (num4 % 5 === 0 && num4 % 3 === 0) { // num4 % 15 === 0
+                console.log(num4);
+            }
+            num4++;
+        }
+    </script>
+</body>
+</html>

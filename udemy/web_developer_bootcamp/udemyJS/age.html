@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Age Calculator</h1>
+    <p>Enter your age and find out how many days you've been alive</p>
+    <script>
+        setTimeout(() => {
+            const age = prompt("How old are you?");
+            const days = age * 365;
+            alert(`${age} years is roughly ${days} days.`);
+        }, 1000);
+    </script>
+</body>
+</html>

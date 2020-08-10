@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function isEven(number) {
+            return number % 2 === 0 ? true : false;
+        }
+        
+        function factorial(n) {
+            if (n === 0) {
+                return 1;
+            } else {
+                return n * factorial(n - 1);
+            }
+        }
+
+        function factorialWhile(n) {
+            let ans = 1;
+            if (n === 0) {
+                return 1;
+            } else {
+                while (n > 0) {
+                    ans *= n;
+                    n --;
+                }
+                return ans;
+            }
+            
+        }
+
+        function kebabToSnake(string) {
+            let newString = string.split('');
+            for (let i=0; i<newString.length; i++) {
+                if (newString[i] === '-') {
+                    newString[i] = '_';
+                }
+            }
+            let newStr = newString.join('');
+            return newStr;
+        }
+        console.log(kebabToSnake('BLAH'));
+
+        function kebab(str) {
+            newStr = str.replace(/-/g, '_');
+            return newStr;
+        }
+        console.log(kebab('hello-world'));
+    </script>
+</body>
+</html>
