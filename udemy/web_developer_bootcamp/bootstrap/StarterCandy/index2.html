@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Museum</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+        body {
+            background-color: #F5D9D5;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .navbar, .navbar-brand{
+            font-weight: 200;
+            font-size: 1.5rem;
+        }
+
+        .navbar-dark .navbar-brand, .navbar-dark .navbar-brand:hover {
+            color: #ea1c2c;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255,255,255);
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ea1c2c;
+        }
+
+        .red {
+            color: #ea1c2c;
+        }
+
+        .welcome > h2 {
+            font-size: 4rem;
+            font-weight: 200;
+        }
+
+        .lorem {
+            color: #f498b8;
+            font-weight: 200;
+            font-size: 1.125rem;
+            line-height: 2;
+        }
+
+        .lorem h1 {
+            color: #ea1c2c;
+            font-weight: 200;
+            font-size: 2.5rem;
+        }
+
+        .content {
+            /*두개가 중복 적용되지 않음*/
+            margin-top: 100px;
+            margin-bottom: 100px;
+        }
+
+        .navbar.scrolled {
+            background-color: rgb(222, 192, 222);
+            transition: background 500ms;
+        }
+
+        @media (max-width: 1200px) {
+            .welcome h2 {
+                font-weight: 100;
+                font-size: 3rem;
+            }
+            
+            .lorem h1 {
+                font-weight: 200;
+                font-size: 2rem;
+            }
+        }
+
+    </style>
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top py-0">
+        <a class="navbar-brand" href="#">CANDY</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">TICKETS</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid px-0">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-6">
+                <div class=" welcome d-none d-lg-block text-white text-center mt-5">
+                    <h2>MUSEUM<span class="red">/</span>OF<span class="red">/</span>CANDY</h2>
+                    <h2>MUSEUM<span class="red">/</span>OF<span class="red">/</span>CANDY</h2>
+                    <h2>MUSEUM<span class="red">/</span>OF<span class="red">/</span>CANDY</h2>
+                    <h2>MUSEUM<span class="red">/</span>OF<span class="red">/</span>CANDY</h2>
+                    <h2>MUSEUM<span class="red">/</span>OF<span class="red">/</span>CANDY</h2>
+                    <h2>MUSEUM<span class="red">/</span>OF<span class="red">/</span>CANDY</h2>
+                    <h2>MUSEUM<span class="red">/</span>OF<span class="red">/</span>CANDY</h2>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="imgsCandy/hand2.png" class="img-fluid">
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center content">
+            <div class="col-md-6 order-2 order-md-1">
+                <img src="imgsCandy/milk.png" class="img-fluid">
+            </div>
+            <div class="col-md-6 order-1 order-md-2">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-10 col-lg-8">
+                        <div class="lorem text-center align-items-center">
+                            <h1>MUSEUM OF CANDY</h1>
+                            <img src="imgsCandy/lolli_icon.png" class="d-none d-lg-inline">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, iste molestiae beatae, maiores deserunt in voluptatibus aspernatur architecto excepturi delectus soluta? Ipsa, deleniti dolorem hic consequatur repellat eveniet quidem voluptate necessitatibus dolorum delectus minus vitae, ut, veritatis sint ipsum magnam autem nam ex deserunt debitis eaque ratione! Nobis, quidem assumenda.
+                            </p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center content">
+            <div class="col-md-6 order-2">
+                <img src="imgsCandy/gumball.png" class="img-fluid">
+            </div>
+            <div class="col-md-6 order-1">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-10 col-lg-8">
+                        <div class="lorem text-center align-items-center">
+                            <h1>MUSEUM OF CANDY</h1>
+                            <img src="imgsCandy/lolli_icon.png" class="d-none d-lg-inline">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, iste molestiae beatae, maiores deserunt in voluptatibus aspernatur architecto excepturi delectus soluta? Ipsa, deleniti dolorem hic consequatur repellat eveniet quidem voluptate necessitatibus dolorum delectus minus vitae, ut, veritatis sint ipsum magnam autem nam ex deserunt debitis eaque ratione! Nobis, quidem assumenda.
+                            </p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center content">
+            <div class="col-md-6 order-2 order-md-1">
+                <img src="imgsCandy/sprinkles.png" class="img-fluid">
+            </div>
+            <div class="col-md-6 order-1 order-md-2">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-10 col-lg-8">
+                        <div class="lorem text-center align-items-center">
+                            <h1>MUSEUM OF CANDY</h1>
+                            <img src="imgsCandy/lolli_icon.png" class="d-none d-lg-inline">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, iste molestiae beatae, maiores deserunt in voluptatibus aspernatur architecto excepturi delectus soluta? Ipsa, deleniti dolorem hic consequatur repellat eveniet quidem voluptate necessitatibus dolorum delectus minus vitae, ut, veritatis sint ipsum magnam autem nam ex deserunt debitis eaque ratione! Nobis, quidem assumenda.
+                            </p>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+      $(function () {
+        $(document).scroll(function() {
+          const $nav = $(".navbar");
+          $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
+        });
+      });
+    </script>
+</body>
+</html>
