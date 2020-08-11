@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JS Methods</h1>
+    <p>Topics:</p>
+    <ul>
+        <li>Adding methods to an object</li>
+        <li>Namespacing</li>
+        <li>The Keyword this</li>
+    </ul>
+    <script>
+        let obj = {
+            name: "Chuck",
+            age: 45,
+            isCool: false,
+            friends: ["Bob", "Bart"],
+            add: function(x, y) {
+                //This is method (function in obj)
+                return x + y;
+            }
+        };
+
+        let dogspace = {};
+        // I can use same name but return others
+        dogspace.speak = function () {
+            return "WOOF!";
+        }
+        let catspace = {};
+        catspace.speak = function () {
+            return "MEOW!";
+        }
+        // methods is used to organize the object and function related to object
+        // the Keyword this
+        let comments = {};
+        comments.data = ["Good Job!", "Bye", "Lame..."]
+        function print(arr) {
+            arr.forEach(element => {
+                console.log(element);
+            })
+        }
+        //this는 object를 나타냄(여기서는) 경우에 따라서 가리키는 것이 다름.
+        //print는 comments 내부의 method
+        comments.print = function() {
+            this.data.forEach(element => {
+                console.log(element);
+            })
+        }
+    </script>
+</body>
+</html>
