@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function printReverse(array) {
+            //need to write
+            //[1, 2, 3, 4] => [4, 3, 2, 1] use shift and push?
+            let newArray = array.slice();
+            let result = [];
+            for(let i=array.length-1; i>=0; i--) {
+                let pop = newArray.pop();
+                result.push(pop);
+            }
+            return result;
+        }
+        
+        function isUniform(array) {
+            //need to write
+            // [1, 1, 1, 1] => true, [1, 1, 1, 2] => false
+            const clean = array[0]
+            for (let i=0; i<array.length; i++) {
+                if (array[i] !== clean) {
+                    return false;
+                }
+            }
+            return true;
+            /*
+            array.forEach(element => {
+                return clean !== element ? false : true;
+            })
+            */
+        }
+
+        function sumArray(array) {
+            let result = 0
+            /*
+            for (let i=0; i<array.length; i++) {
+                result += array[i];
+            }
+            return result;
+            */
+           array.forEach(element => {
+               result += element;
+           });
+           return result;
+
+        }
+
+        function max(array) {
+            let max = array[0];
+            array.forEach(element => {
+                if(max < element) {
+                    max = element;
+                }
+            });
+            return max;
+        }
+
+        //forEach구조
+        //function myforEach(array, func) {
+        //  for(let i=0; i<array.length; i++) {
+        //      func(array[i])
+        //  }
+        //}
+        
+        let posts = [
+            {
+                title = "Cats",
+                author = "Colt"
+            },
+            {
+                title ="Dogs",
+                author = "Dog Lover",
+                comments = ["<3", "Go to hell"]
+            }
+        ]
+    </script>
+</body>
+</html>
