@@ -20,15 +20,30 @@
             while(flag) {   
                 const userValue = prompt("What would you like to do?");
                 if (userValue === 'list') {
-                    console.log(toDos);
+                   listToDos();
                 } else if (userValue === 'new') {
                     const toDo = prompt("Enter a new todo");
                     toDos.push(toDo);
-                    console.log(toDos);
-                } else if (userValue === 'quit') {
+                } else if (userValue === 'delete') {
+                    deleteToDos();
+                    listToDos();
+                }else if (userValue === 'quit') {
+                    console.log("ok, you quit the app");
                     flag = false;
                 }
             }
+        }
+        function listToDos() {
+            console.log("*********");
+            toDos.forEach((todo, index)=> {
+                console.log(`${index}: ${todo}`);
+            });
+            console.log("*********");
+        }
+
+        function deleteToDos() {
+            const num = prompt("Enter index of todo to delete");
+            toDos[num] !== undefined ? toDos.splice(num, 1) : console.log("No index in todo list"); //pop only remove the last element
         }
         
     </script>

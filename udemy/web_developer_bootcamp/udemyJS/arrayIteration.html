@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        const colors = ["red", "orange", "yellow", "green"];
+        numbers.forEach(color => {
+            if (color % 3 === 0) {
+                console.log(color);
+            }
+        });
+        //forEach function can takes up to 3 arguments. and This is how .forEach was designed.
+        //1. element in the array, 2. index of the element 3.array that .forEach was called on
+        const nums = [1, 2, 3]
+        function logNums(element, index, arr) {
+            console.log(element, index, arr);
+        }
+        nums.forEach(logNums); //forEach is callback function we do NOT need to () next to the function
+    </script>
+</body>
+</html>
