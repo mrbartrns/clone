@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Movie Database</h1>
+    <script>
+        let movies = [
+            {
+                title: 'In Bruges',
+                rating: 5,
+                hasWatched: true
+        }, 
+            {
+            title: 'Frozen',
+            rating: 4.5,
+            hasWatched: false
+        }, 
+            {
+           title: 'Mad Max Fury Road',
+           rating: 5,
+           hasWatched: true 
+        }, 
+            {
+            title: 'Les Miserables',
+            rating: 3.5,
+            hasWatched: false
+        }
+        ];
+        movies.forEach(movie => {
+            if (movie.hasWatched) {
+                console.log(`You have seen "${movie['title']}" - ${movie['rating']} stars`);
+            } else {
+                console.log(`You have not seen "${movie['title']}" - ${movie['rating']} stars`);
+            }
+        })
+    </script>
+</body>
+</html>
