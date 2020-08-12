@@ -43,7 +43,8 @@
                 console.log(element);
             })
         }
-        //this는 object를 나타냄(여기서는) 경우에 따라서 가리키는 것이 다름.
+        //this는 object를 나타냄(여기서는), instance 자기 자신!
+        //경우에 따라서 가리키는 것이 다름.
         //print는 comments 내부의 method
         comments.print = function() {
             this.data.forEach(element => {
