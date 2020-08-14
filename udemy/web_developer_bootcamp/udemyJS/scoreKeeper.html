@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoreKeeper</title>
+</head>
+<body>
+    <style>
+        .form, .buttons {
+            display: inline-block;
+        }
+        
+        .win {
+            color: green;
+        }
+    </style>
+    <div class="score-display">
+        <h1><span class="score player1-score">0</span> to <span class="score player2-score">0</span></h1>
+        <p>Playing to: <span class="playing-to">0</span></p>
+    </div>
+    <div class="form">
+        <input type="number" class="score-input">
+    </div>
+    <div class="buttons">
+        <button type="button" class="player player1" value="1">Player One</button>
+        <button type="button" class="player player2" value="2">Player Two</button>
+        <button type="button" class="reset" value="reset">Reset</button>
+    </div>
+    <script>
+        //먼저 rough하게 짠후, 코드를 재활용 할 일이 있으면 > 독립되는 function으로 만들기
+        const playerBtns = document.querySelectorAll(".player");
+        const scores = document.querySelectorAll(".score");
+        const scoreInput = document.querySelector(".score-input");
+        const playingTo = document.querySelector(".playing-to");
+        const resetBtn = document.querySelector(".reset");
+
+        let player1 = 0;
+        let player2 = 0;
+        let winningScore = 5;
+        let gameOver = false;
+
+        function reset() {
+            player1 = 0;
+                player2 = 0;
+                winningScore = 5;
+                scores.forEach((score, index) => {
+                    score.classList.remove("win");
+                    if(index === 0) {
+                        score.textContent = player1;
+                    } else if(index === 1) {
+                        score.textContent = player2;
+                    }
+                });
+                playingTo.textContent = winningScore;
+                scoreInput.value = "";
+                gameOver = false;
+        }
+
+        function paintWinner() {
+            if (player1 === winningScore) {
+                scores[0].classList.add("win");
+            } else if (player2 === winningScore) {
+                scores[1].classList.add("win");
+            }
+        }
+
+        function init() {
+            playingTo.textContent = winningScore;
+            playerBtns.forEach((player, index) => {
+                player.addEventListener("click", () => {
+                    if (!gameOver) {
+                        if (index === 0) {
+                        player1++;
+                        scores[index].textContent = player1;
+                        } else if (index === 1) {
+                        player2++;
+                        scores[index].textContent = player2;
+                        }
+                        if (player1 === winningScore || player2 === winningScore) {
+                            paintWinner();
+                            gameOver = true;
+                        }
+                    }
+                })
+            });
+            scoreInput.addEventListener("change", () => {
+                const value = scoreInput.value;
+                winningScore = Number(value);
+                playingTo.textContent = value;
+            })
+            resetBtn.addEventListener("click", reset);
+        }
+
+        init();
+    </script>
+</body>
+</html>

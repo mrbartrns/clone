@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .winner {
+            color: green;
+        }
+    </style>
+    <!--html 처음 구조(class등 아무것도 신경쓰지 말고 할 것)-->
+    <h1><span id="p1-display">0</span> to <span id="p2-display">0</span></h1>
+    <p>Playing to: <span>5</span></p>
+    <input type="number">
+    <button id="p1">Player One</button>
+    <button id="p2">Player Two</button>
+    <button id="reset">Reset</button>
+    <script>
+        /*
+        웹페이지를 만들 때 가이드라인
+        1. 먼저 html로 구조를 잡는다.
+        2. 후에 자바스크립트로 동작을 추가한다.
+        3. 객체를 만든 후 console.log()를 이용하여 꼭 확인한다.*/
+        const p1Button = document.querySelector("#p1");
+        const p2Button = document.querySelector("#p2");
+        const h1 = document.querySelector("h1");
+        const p1Display = document.querySelector("#p1-display");
+        const p2Display = document.querySelector("#p2-display");
+        const resetBtn = document.querySelector("#reset");
+        const numInput = document.querySelector("input");
+        const winningScoreDisplay = document.querySelector("p span");
+
+        let winningScore = 5;
+        let gameOver = false;
+
+        let p1Score = 0;
+        let p2Score = 0;
+        //화면에 표시하는 것 보다 logic 먼저
+
+        function reset() {
+            p1Score = 0;
+            p2Score = 0;
+            winningScore = 5;
+            p1Display.textContent = p1Score;
+            p2Display.textContent = p2Score;
+            winningScoreDisplay.textContent = winningScore;
+            p1Display.classList.remove("winner");
+            p2Display.classList.remove("winner");
+            gameOver = false;
+            numInput.value = ""
+        }
+        p1Button.addEventListener("click", () => {
+            if(!gameOver) {
+                p1Score++;
+                if(p1Score === winningScore) {
+                    p1Display.classList.add("winner");
+                    gameOver = true;
+                }
+                p1Display.textContent = p1Score;
+            }
+        });
+        p2Button.addEventListener("click", () => {
+            if (!gameOver) {
+                p2Score++;
+                if(p2Score === winningScore) {
+                    p2Display.classList.add("winner");
+                    gameOver = true;
+                }
+                p2Display.textContent = p2Score;
+            }
+        })
+        resetBtn.addEventListener("click", reset);
+        
+        //change 이벤트를 사용할시, 화면에 실시간 반영 가능
+        numInput.addEventListener("change", () => {
+            winningScoreDisplay.textContent = numInput.value;
+            winningScore =Number(numInput.value);
+        })
+    </script>
+</body>
+</html>
