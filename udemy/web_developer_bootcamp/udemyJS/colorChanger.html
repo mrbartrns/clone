@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+            background-color: white;
+        }
+
+        .active {
+            background-color: purple;
+        }
+    </style>
+    <button type="button" class="click">CLICK ME</button>
+    <script>
+        /* Doc String(Psuedo Code)
+            if white: make it purple
+            else: make it white;
+        */
+        // method 1
+        // const body = document.querySelector("body");
+        // const button = document.querySelector(".click");
+        // button.addEventListener("click", () => {
+        //     if (body.classList.contains("active")) {
+        //         body.classList.remove("active");
+        //     } else {
+        //         body.classList.add("active");
+        //     }
+        // });
+        // method 2
+        const body = document.querySelector("body");
+        const btn = document.querySelector(".click");
+        // btn.addEventListener("click", function() {
+        //     body.classList.toggle("active");
+        // })
+        // method 3
+        // btn.addEventListener("click", () => {
+        //     if(!(body.style.backgroundColor === "purple")) {
+        //         body.style.backgroundColor = "purple";
+        //     } else {
+        //         body.style.backgroundColor = "white";
+        //         // document.body.style.backGroundColor = "white";
+        //     }
+        // });
+        // method 4
+        let isPurple = false; // getter, setter, is method 중 하나(class에 들어가는), isMethod's value is true of false
+        btn.addEventListener("click", () => {
+            if (!isPurple) {
+                body.classList.add("active");
+                isPurple = true;
+            } else {
+                body.classList.remove("active");
+                isPurple = false;
+            }
+        })
+    </script>
+</body>
+</html>
