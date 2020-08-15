@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>COLOR GUESSING</title>
+</head>
+<body>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        header {
+            transition: background 1.2s;
+            background-color: royalblue;
+            color: white;
+        }
+
+        span {
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .color {
+            width: 200px;
+            height: 200px;
+            border-radius: 2rem;
+            transition: background 1.2s;
+        }
+
+        .result-area {
+            background-color: white;
+            color: royalblue;
+            font-size: 1.25rem;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+    <header>
+        <div class="question-area">
+            <div class="container justify-content-center text-center">
+                <p>THE GREAT</p>
+                <h1 class="question text-uppercase">RGB(0, 0, 0)</h1>
+                <p>GUESSING GAME</p>
+            </div>
+        </div>
+        <div class="result-area d-flex justify-content-around align-content-center">
+            <div class="container d-flex justify-content-between nav">
+                <span class="after-correct">NEW</span>
+                <span class="result hidden">Result</span>
+                <div class="difficulty d-inline">
+                    <span id="easy easy-hard">EASY</span>
+                    <span id="hard easy-hard">HARD</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="container">
+            <div class="row py-4">
+                <div class="col-4">
+                    <div class="row justify-content-center align-content-center">
+                        <div class="col-10 color border" id="color1"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row justify-content-center align-content-center">
+                        <div class="col-10 color border" id="color2"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row justify-content-center align-content-center">
+                        <div class="col-10 color border" id="color3"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-4">
+                <div class="col-4">
+                    <div class="row justify-content-center align-content-center">
+                        <div class="col-10 color border" id="color4"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row justify-content-center align-content-center">
+                        <div class="col-10 color border" id="color5"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row justify-content-center align-content-center">
+                        <div class="col-10 color border" id="color6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        const colors = document.querySelectorAll(".color");
+        const problem = document.querySelector(".question");
+        const game = document.querySelector(".after-correct");
+        const result = document.querySelector(".result");
+        const difficulties = document.querySelectorAll(".easy-hard");
+        const header = document.querySelector("header")
+
+        let rgbs = []; // objects are in the obect
+        let answer = "";
+        let gameOver = false;
+
+        function paintResult(e) {
+            if(gameOver) {
+                console.log(e.propertyName);
+                result.classList.remove("hidden");
+                result.textContent = "Correct!";
+                game.textContent = "PLAY AGAIN?";
+            }
+        }
+        
+        function paintAnswer() {
+            colors.forEach(color => {
+                color.style.backgroundColor = answer;
+            });
+            header.style.backgroundColor = answer;
+        }
+
+        function handleQuiz() {
+            const bgColor = this.style.backgroundColor;
+            console.log(bgColor);
+            console.log(answer);
+            if (!gameOver) {
+                if(bgColor !== answer) {
+                    this.classList.add("hidden");
+                    result.classList.remove("hidden");
+                    result.textContent = "Try Again";
+                }
+                else {
+                    paintAnswer();
+                    // paintResult();
+                    gameOver = true;
+                    header.addEventListener("transitionend", paintResult);
+                }
+            }
+        }
+
+        function makeQuiz() {
+            colors.forEach(color => {
+                color.addEventListener("click", handleQuiz);
+            })
+        }
+
+        function getQuestion() {
+            const randomIndex = Math.floor(Math.random() * rgbs.length);
+            const rgb = rgbs[randomIndex]['rgb'];
+            problem.textContent = rgb;
+            answer = rgb;
+        }
+
+        function fillColors() {
+            colors.forEach((color, index) => {
+                if (color.classList.contains("hidden")) {
+                    color.classList.remove("hidden");
+                }
+                const rgb = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
+                const rgbObj = {
+                id: index + 1,
+                rgb: rgb
+            }
+                color.style.backgroundColor = rgb;
+                rgbs.push(rgbObj);
+                console.log(rgbs)
+            });
+        }
+        function init() {
+            fillColors();
+            getQuestion();
+            makeQuiz();
+        }
+        init();
+        game.addEventListener("click", function() {
+                header.style.backgroundColor = "royalblue";
+                result.textContent = "";
+                rgbs = [];
+                answer = "";
+                gameOver = false;
+                game.textContent = "NEW";
+                fillColors();
+                getQuestion();
+                makeQuiz();
+            });
+    </script>
+</body>
+</html>
