@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .done {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+    </style>
+    <ul>
+        <li>Wash Cat</li>
+        <li>Feed Cat</li>
+        <li>Feed Cat to Dog</li>
+    </ul>
+    <script>
+        const lis = document.querySelectorAll("li");
+        // for (let i = 0; i < lis.length; i++) {
+        //     lis[i].addEventListener("mouseover", function() {
+        //         this.style.color = "green";
+        //     });
+        //     lis[i].addEventListener("mouseout", function() {
+        //         this.style.color = "black";
+        //     });
+        // }
+        lis.forEach(li => li.addEventListener("mouseover", handleMouseOver));
+        lis.forEach(li => li.addEventListener("mouseout", handleMouseOut));
+        lis.forEach(li => li.addEventListener("click", () => {
+            li.classList.toggle("done");
+        }))
+        // arrow function 내의 function은 this사용 가능
+        function handleMouseOver() {
+            this.style.color = "green";
+        }
+
+        function handleMouseOut() {
+            this.style.color = "black";
+        }
+    </script>
+</body>
+</html>
