@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLOR GAME</title>
+</head>
+<body>
+    <style>
+        body {
+            background-color: #232323;
+            margin: 0;
+            font-family: 'Montserrat', 'Avenir';
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .square {
+            width: 30%;
+            /*빈 사각형을 만들고 싶을 때는 padding-bottom으로 만들어 준다 width는 그대로*/
+            padding-bottom: 30%;
+            background-color: purple;
+            margin: 1.66%;
+            float: left;
+            border-radius: 15%;
+            transition: background 0.6s;
+            -webkit-transition: background 0.6s;
+            -moz-transition: background 0.6s;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: normal;
+            line-height: 1.1;
+            color: white;
+            background-color: steelblue;
+            text-transform: uppercase;
+            margin: 0;
+            padding: 20px 0;
+        }
+        h1 span {
+            font-size: 200%;
+            display: block;
+        }
+
+        #message {
+            display: inline-block;
+            width: 20%;
+        }
+
+        button {
+            border: none;
+            /*not a background-color*/
+            background: none;
+            font-weight: 700;
+            color: steelblue;
+            text-transform: uppercase;
+            font-size: inherit;
+            height: 100%;
+            letter-spacing: 1px;
+            /*what we want to transition, seconds*/
+            transition: all 0.3s;
+            border-radius: 0;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            /* 버튼을 눌렀을 때 외부 border을 없애줌 */
+            outline: none;
+        }
+        button:hover {
+            background-color: steelblue;
+            color: white;
+        }
+        #stripe {
+            background-color: white;
+            text-align: center;
+            color: black;
+        }
+
+        .selected {
+            background-color: steelblue;
+            color: white;
+        }
+
+        .none {
+            display: none;
+        }
+
+    </style>
+    <!--background color를 js에서 직접 변경하면, h1 attribute에 style이 자동으로 생성-->
+    <h1>The GREAT <span id="color-display">RGB</span> COLOR GAME</h1>
+    <div id="stripe">
+        <button id="reset">New Colors</button>
+        <span id="message"></span>
+        <button class="mode">EASY</button>
+        <button  class="mode selected">HARD</button>
+    </div>
+    <div class="container">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+    <script>
+        const squares = document.querySelectorAll(".square");
+        const colorDisplay = document.querySelector("#color-display");
+        const messageDisplay = document.querySelector("#message");
+        const h1 = document.querySelector("h1");
+        const resetButton = document.querySelector("#reset");
+        const modeButtons = document.querySelectorAll(".mode");
+
+        let numSquares = 6;
+        let colors = generateRandomColors(numSquares);
+        let pickedColor = colors[pickColor()]; //random number
+        //object로 묶고 싶을 때
+        // let game = {};
+        // game.init = function() {
+        //     modeButtons.forEach( (mode) => {
+        //     mode.addEventListener("click", handleClick);
+        //     });
+        //     setUpSquares();
+        //     reset();
+        // }
+
+        colorDisplay.textContent = pickedColor;
+        resetButton.addEventListener("click", reset);
+        
+        
+        function changeColors(givenColor) {
+            //change each colors to given colors
+            squares.forEach(square => {
+                square.style.backgroundColor = givenColor;
+            })
+        }
+
+        function pickColor() {
+            //pick a random number
+            const randomNumber = Math.floor(Math.random() * colors.length);
+            return randomNumber;
+        }
+
+        function generateRandomColors(num) {
+            //make an array add num random numbers to array
+            //num: times
+            //return that array
+            let arr = [];
+            for (let i = 0; i < num; i++) {
+                arr.push(randomColor())
+            }
+            return arr
+        }
+
+        function randomColor() {
+            //any number 0 to 255
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function handleClick() {
+            modeButtons[0].classList.remove("selected");
+            modeButtons[1].classList.remove("selected");
+            this.classList.add("selected");
+            this.textContent === "EASY" ? numSquares = 3 : numSquares = 6;
+            reset();
+        }
+
+        function reset() {
+            colors = generateRandomColors(numSquares);
+            console.log(colors);
+            //pick a new random colors to arr
+            pickedColor = colors[pickColor()];
+            console.log(pickedColor);
+            messageDisplay.textContent = "";
+            //change color of squares
+            colorDisplay.textContent = pickedColor;
+            for(let i = 0; i < squares.length; i++) {
+                if (colors[i]) {
+                    squares[i].classList.remove("none");
+                    squares[i].style.backgroundColor = colors[i];
+                } else {
+                    squares[i].classList.add("none");
+                }
+            }
+            resetButton.textContent = "New Colors";
+            h1.style.backgroundColor = "steelblue";
+        }
+
+        function setUpSquares() {
+            squares.forEach((square, index) => {
+                // add initial colors on square
+                square.addEventListener("click", function() {
+                    let clickedColor = this.style.backgroundColor
+                    if (clickedColor === pickedColor) {
+                        messageDisplay.textContent = "Correct!";
+                        resetButton.textContent = "play Again?";
+                        changeColors(clickedColor)
+                        h1.style.backgroundColor = clickedColor;
+                    } else {
+                        this.style.backgroundColor = "#232323";
+                        messageDisplay.textContent = "Try Again";
+                    }
+                })
+            });
+        }
+        function init() {
+            modeButtons.forEach( (mode) => {
+            mode.addEventListener("click", handleClick);
+            });
+            setUpSquares();
+            reset();
+        }
+
+        init();
+    </script>
+</body>
+</html>
