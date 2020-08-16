@@ -135,12 +135,12 @@
             if (!gameOver) {
                 if(bgColor !== answer) {
                     this.classList.add("hidden");
-                    result.classList.remove("hidden");
                     result.textContent = "Try Again";
                 }
                 else {
                     paintAnswer();
                     // paintResult();
+                    this.classList.remove("hidden");
                     gameOver = true;
                     header.addEventListener("transitionend", paintResult);
                 }
