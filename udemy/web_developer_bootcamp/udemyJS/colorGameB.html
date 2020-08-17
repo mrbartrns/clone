@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+            background-color: #232323;
+            margin: 0;
+            font-family: 'Montserrat', 'Avenir';
+        }
+
+        h1 {
+            color: white;
+            background-color: steelblue;
+            margin: 0;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: normal;
+            padding: 20px 0;
+            line-height: 1.1;
+            transition: background 0.6s;
+        }
+        
+        #stripe {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: white;
+        }
+        #message {
+            display: inline-block;
+            width: 20%;
+        }
+
+        .container {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .square {
+            width: 30%;
+            padding-bottom: 30%;
+            margin: 1.66%;
+            background-color: purple;
+            float: left;
+            border-radius: 15%;
+            transition: all 0.6s;
+        }
+
+        .color {
+            display: block;
+            font-size: 200%;
+        }
+
+        .none {
+            display: none;
+        }
+
+        button {
+            background: none;
+            border: none;
+            font-weight: 700;
+            color: steelblue;
+            font-size: inherit;
+            outline: none;
+            letter-spacing: 1px;
+            height: 100%;
+            padding-top: 3px;
+            border-radius: 0;
+            transition: background 0.6s;
+        }
+
+        button:hover {
+            background-color: steelblue;
+            color: white;
+        }
+
+        .selected {
+            background-color: steelblue;
+            color: white;
+        }
+    </style>
+    <h1>The Great <span class="color">RGB</span> COLOR GAME</h1>
+    <div id="stripe">
+        <button class="reset">NEW COLORS</button>
+        <span id="message"></span>
+        <button class="mode">EASY</button>
+        <button class="mode selected">HARD</button>
+    </div>
+    <div class="container">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+    <script>
+        const squares = document.querySelectorAll(".square");
+        const resetButton = document.querySelector(".reset");
+        const modeButtons = document.querySelectorAll(".mode");
+        const messageDisplay = document.querySelector("#message");
+        const colorDisplay = document.querySelector(".color");
+        const title = document.querySelector("h1");
+        const DISPLAY_NONE = "none";
+        const SELECTED = "selected";
+
+        let difficulty = 6;
+        let colors = setUpColorArr(difficulty);
+        let colorIndex = pickRandomIndex(difficulty);
+
+        function makeRGB() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function handleModes() {
+            if (this.textContent === "EASY") {
+                    this.classList.add(SELECTED);
+                    modeButtons[1].classList.remove(SELECTED);
+                    difficulty = 3;
+                } else {
+                    this.classList.add(SELECTED);
+                    modeButtons[0].classList.remove(SELECTED);
+                    difficulty = 6;
+                }
+            reset();
+            colorDisplay.textContent = colors[colorIndex];
+            squares.forEach((square, index) => {
+                square.style.backgroundColor = colors[index];
+                if(!colors[index]) {
+                    square.style.backgroundColor = "#232323";
+                    square.classList.add(DISPLAY_NONE);
+                } else {
+                    square.classList.remove(DISPLAY_NONE);
+                }
+            });
+        }
+
+        function reset() {
+            resetButton.textContent = "NEW COLORS";
+            messageDisplay.textContent = "";
+            title.style.backgroundColor = "steelblue";
+            colors = setUpColorArr(difficulty);
+            colorIndex = pickRandomIndex(difficulty);
+            colorDisplay.textContent = colors[colorIndex];
+            squares.forEach((square, index) => {
+                square.style.backgroundColor = colors[index];
+            });
+        }
+
+        function checkAnswer() {
+            const pickedColor = this.style.backgroundColor;
+            if (pickedColor !== colors[colorIndex]) {
+                this.style.backgroundColor = "#232323";
+                messageDisplay.textContent = "Try Again";
+            } else {
+                for(let i = 0; i < colors.length; i++) {
+                    squares[i].style.backgroundColor = pickedColor;
+                }
+                title.style.backgroundColor = pickedColor;
+                messageDisplay.textContent = "Correct!";
+                resetButton.textContent = "PLAY AGAIN?";
+            }
+        }
+
+        function setUpColorArr(difficulty) {
+            let arr = [];
+            for (let i = 0; i < difficulty; i++) {
+                const rgb = makeRGB();
+                arr.push(rgb);
+            }
+            return arr;
+        }
+
+        function pickRandomIndex(difficulty) {
+            const index = Math.floor(Math.random() * difficulty);
+            return index;
+        }
+
+        function init() {
+            colorDisplay.textContent = colors[colorIndex];
+            squares.forEach((square, index) => {
+                square.style.backgroundColor = colors[index];
+            });
+            squares.forEach( square => {
+                square.addEventListener("click", checkAnswer);
+            });
+            resetButton.addEventListener("click", reset);
+            modeButtons.forEach( mode => {
+                mode.addEventListener("click", handleModes);
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>
