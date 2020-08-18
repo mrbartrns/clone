@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script</title>
+</head>
+<body>
+    <style>
+        textarea {
+            font-family: 'Malgun Gothic';
+        }
+    </style>
+    <h1>script</h1>
+    <form class="script-form">
+        <textarea class="script" rows="30" cols="100" placeholder="'캐릭터이름: 대화' 양식을 꼭 지켜주세요."></textarea>
+    </form>
+    <button type="button" class="script-submit">Submit</button>
+    <script>
+        const script = document.querySelector(".script");
+        const scriptSubmitBtn = document.querySelector(".script-submit");
+
+        let scriptObjects = [];
+        
+        function Script(characterName, script) {
+            this.row = scriptObjects.length + 1;
+            this.characterName =  characterName;
+            this.script = script;
+        }
+
+        Script.prototype.getRow = function() {
+            return this.row;
+        }
+        
+        Script.prototype.getCharactorName = function() {
+            return this.characterName;
+        }
+
+        Script.prototype.getScript = function() {
+            return this.script;
+        }
+        
+        // {row: 1, name: characterName, speak: something}
+        // scriptarr = [] => row값은 이것으로 저장
+        function handleValue(text) {
+            // const words = text.split(/:|\n|\r/);
+            const texts = text.split("\n");
+            const firstProcessedTexts = texts.filter(text => {
+                return text !== "";
+            })
+            console.log(firstProcessedTexts);
+            firstProcessedTexts.forEach(text => {
+                const secondProcessedTexts = text.split(":");
+                console.log(secondProcessedTexts);
+                // const scriptObj = {
+                //     row: scriptObjects.length + 1,
+                //     characterName: secondProcessedTexts[0],
+                //     script: secondProcessedTexts[1]
+                // }
+                const scriptObj = new Script(secondProcessedTexts[0], secondProcessedTexts[1]);
+                console.log(scriptObj.getRow(), scriptObj.getCharactorName(), scriptObj.getScript());
+                scriptObjects.push(scriptObj);
+                console.log(scriptObjects);
+            });
+        }
+        
+        function init() {
+            scriptSubmitBtn.addEventListener("click", () => {
+                const value = script.value;
+                handleValue(value);
+                script.value = "";
+            })
+        }
+
+        init();
+    </script>
+</body>
+</html>
