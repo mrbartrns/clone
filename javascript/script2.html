@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea rows="30" cols="100"></textarea>
+    <script>
+        const txtarea = document.querySelector("textarea");
+        txtarea.addEventListener("click", handleClick);
+        function handleClick() {
+            const a = getRow();
+            console.log(a);
+        }
+    function getRow() {
+        const txts = txtarea.value;
+        const strings = txts.split("\n");
+        const cursorPoint = txtarea.selectionStart;
+        let lineStart = 0;
+        for (let i = 0; i < strings.length; i++) {
+            let lineEnd = lineStart + strings[i].length + 1;
+            if (lineStart <= cursorPoint && cursorPoint < lineEnd) {
+                return(i + 1);
+            } else {
+                lineStart = lineEnd;
+            }
+        }
+    }
+    </script>
+</body>
+</html>
