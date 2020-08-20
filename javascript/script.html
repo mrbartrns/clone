@@ -59,12 +59,10 @@
         const SELECTED = "selected";
         const action = document.querySelector(`.${SELECTED}`).dataset.type;
         
-        let strings = [];
         let dialogObjects = [];
-        let stringsLength = strings.length;
-
-        const dialogObject = new Dialog(action);
-        dialogObjects.push(dialogObject);
+        // let strings = [];
+        // let stringsLength = strings.length;
+        let stringsLength = 0;
 
         function Dialog(action) {
             this.row = dialogObjects.length + 1;
@@ -96,6 +94,19 @@
             this.script = text;
         }
 
+        function refreshDialogs(strings) {
+            dialogObjects.forEach((object,index) => {
+                object.setRow(index + 1);
+                object.setScript(strings[index]);
+            })
+        }
+
+        function getTextArr() {
+            const value = scriptInput.value;
+            const strings = value.split("\n");
+            return strings;
+        }
+
         function getRow(textarea) {
             const txts = textarea.value;
             const txtsArr = txts.split("\n");
@@ -104,7 +115,7 @@
             for (let i = 0; i < txtsArr.length; i++) {
                 let lineEnd = lineStart + txtsArr[i].length + 1;
                 if (lineStart <= cursorPoint && cursorPoint < lineEnd) {
-                    let lineIndex = i + 1;
+                    const lineIndex = i + 1;
                     return lineIndex;
                 } else {
                     lineStart = lineEnd;
@@ -113,37 +124,28 @@
         }
 
         function handleEnter() {
-            const value = scriptInput.value;
-            strings = value.split("\n");
+            const strings = getTextArr();
             const action = document.querySelector(`.${SELECTED}`).dataset.type;
             console.log(strings);
             const row = getRow(scriptInput);
             const dialogObject = new Dialog(action);
             dialogObjects.splice(row - 1, 0, dialogObject);
             console.log(dialogObjects);
-            dialogObjects.forEach((object, index) => {
-                    object.setRow(index + 1);
-                    object.setScript(strings[index]);
-                })
+            refreshDialogs();
             stringsLength = strings.length;
         }
 
         function handleBackSpace() {
-            const value = scriptInput.value;
+            const strings = getTextArr();
+            // const value = scriptInput.value;
             const row = getRow(scriptInput);
-            strings = value.split("\n");
+            // strings = value.split("\n");
             let currentLength = strings.length;
             let lengths = stringsLength - currentLength;
             if (lengths > 0) {
                 dialogObjects.splice(row, lengths);
-                // strings.forEach((string, index) => {
-                //     dialogObjects[index].setScript(string);
-                // })
                 stringsLength = currentLength;
-                dialogObjects.forEach((object,index) => {
-                    object.setScript(strings[index]);
-                    object.setRow(index + 1);
-                })
+                refreshDialogs();
                 console.log(dialogObjects);
             }
         }
@@ -157,9 +159,10 @@
             console.log(dialogObjects);
         }
 
+        function init() {            
+            const dialogObject = new Dialog(action);
+            dialogObjects.push(dialogObject);
 
-
-        function init() {
             modes.forEach( mode => {
                 mode.addEventListener("click", setUpMode);
             });
