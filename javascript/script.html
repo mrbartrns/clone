@@ -63,6 +63,7 @@
         // let strings = [];
         // let stringsLength = strings.length;
         let stringsLength = 0;
+        // END OF GLOBAL SCOPE'S VARIABLES
 
         function Dialog(action) {
             this.row = dialogObjects.length + 1;
@@ -93,6 +94,7 @@
         Dialog.prototype.setScript = function(text) {
             this.script = text;
         }
+        // END OF OBJECTS
 
         function refreshDialogs(strings) {
             dialogObjects.forEach((object,index) => {
@@ -131,21 +133,19 @@
             const dialogObject = new Dialog(action);
             dialogObjects.splice(row - 1, 0, dialogObject);
             console.log(dialogObjects);
-            refreshDialogs();
+            refreshDialogs(strings);
             stringsLength = strings.length;
         }
 
         function handleBackSpace() {
             const strings = getTextArr();
-            // const value = scriptInput.value;
             const row = getRow(scriptInput);
-            // strings = value.split("\n");
             let currentLength = strings.length;
             let lengths = stringsLength - currentLength;
             if (lengths > 0) {
                 dialogObjects.splice(row, lengths);
                 stringsLength = currentLength;
-                refreshDialogs();
+                refreshDialogs(strings);
                 console.log(dialogObjects);
             }
         }
