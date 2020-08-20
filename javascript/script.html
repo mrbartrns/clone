@@ -55,16 +55,21 @@
         const showingP = showing.querySelector("p");
         const modes = document.querySelectorAll(".mode");
         const ENTER = 13;
+        const BACKSPACE = 8;
         const SELECTED = "selected";
+        const action = document.querySelector(`.${SELECTED}`).dataset.type;
         
         let strings = [];
         let dialogObjects = [];
-        // let types = [];
+        let stringsLength = strings.length;
+
+        const dialogObject = new Dialog(action);
+        dialogObjects.push(dialogObject);
 
         function Dialog(action) {
             this.row = dialogObjects.length + 1;
             this.action = action;
-            this.script = [];
+            this.script = "";
         }
 
         Dialog.prototype.getRow = function() {
@@ -79,52 +84,102 @@
             return this.script;
         }
 
+        Dialog.prototype.setRow = function(row) {
+            this.row = row;
+        }
+
         Dialog.prototype.setAction = function(action) {
             this.action = action;
         }
 
         Dialog.prototype.setScript = function(text) {
-            this.script.push(text);
+            this.script = text;
         }
 
+        function getRow(textarea) {
+            const txts = textarea.value;
+            const txtsArr = txts.split("\n");
+            const cursorPoint = textarea.selectionStart;
+            let lineStart = 0;
+            for (let i = 0; i < txtsArr.length; i++) {
+                let lineEnd = lineStart + txtsArr[i].length + 1;
+                if (lineStart <= cursorPoint && cursorPoint < lineEnd) {
+                    let lineIndex = i + 1;
+                    return lineIndex;
+                } else {
+                    lineStart = lineEnd;
+                }
+            }
+        }
+
+        function handleEnter() {
+            const value = scriptInput.value;
+            strings = value.split("\n");
+            const action = document.querySelector(`.${SELECTED}`).dataset.type;
+            console.log(strings);
+            const row = getRow(scriptInput);
+            const dialogObject = new Dialog(action);
+            dialogObjects.splice(row - 1, 0, dialogObject);
+            console.log(dialogObjects);
+            dialogObjects.forEach((object, index) => {
+                    object.setRow(index + 1);
+                    object.setScript(strings[index]);
+                })
+            stringsLength = strings.length;
+        }
+
+        function handleBackSpace() {
+            const value = scriptInput.value;
+            const row = getRow(scriptInput);
+            strings = value.split("\n");
+            let currentLength = strings.length;
+            let lengths = stringsLength - currentLength;
+            if (lengths > 0) {
+                dialogObjects.splice(row, lengths);
+                // strings.forEach((string, index) => {
+                //     dialogObjects[index].setScript(string);
+                // })
+                stringsLength = currentLength;
+                dialogObjects.forEach((object,index) => {
+                    object.setScript(strings[index]);
+                    object.setRow(index + 1);
+                })
+                console.log(dialogObjects);
+            }
+        }
+
+        // todo: modify setUpMode when I select row showing action
         function setUpMode() {
             modes[0].classList.remove(SELECTED);
             modes[1].classList.remove(SELECTED);
             this.classList.add(SELECTED);
-            const action = document.querySelector(`.${SELECTED}`).dataset.type;
-            // types[types.length - 1] = action;
             dialogObjects[dialogObjects.length - 1].setAction(action);
             console.log(dialogObjects);
         }
 
-        modes.forEach( mode => {
-            mode.addEventListener("click", setUpMode);
-        });
-        const action = document.querySelector(`.${SELECTED}`).dataset.type;
-        const dialogObject = new Dialog(action);
-        dialogObjects.push(dialogObject);
-        // types.push(action);
-        scriptInput.addEventListener("keypress", function(e) {
-            if (e.keyCode === ENTER) {
-                const action = document.querySelector(`.${SELECTED}`).dataset.type;
-                const value = scriptInput.value;
-                strings = value.split("\n");
-                // types.push(action);
-                strings.forEach((string, index) => {
-                    dialogObjects[index].setScript(string);
-                })
-                const dialogObject = new Dialog(action);
-                dialogObjects.push(dialogObject)
-                console.log(dialogObjects)
-                // if (strings.length < types.length) {
-                //     console.log(strings);
-                //     types = types.slice(0, strings.length);
-                // }
-                // console.log(strings);
-                // console.log(types);
-            }
 
-        })
+
+        function init() {
+            modes.forEach( mode => {
+                mode.addEventListener("click", setUpMode);
+            });
+
+            scriptInput.addEventListener("keyup", function(e) {
+                if (e.keyCode === ENTER) {
+                    handleEnter();
+                } else if (e.keyCode === BACKSPACE) {
+                    handleBackSpace();
+                }
+            });
+
+            //toDo: scriptInput.addEventListener("click", handleClick);
+            scriptInput.addEventListener("click", function() {
+                const row = getRow(scriptInput);
+                console.log(row);
+            })
+        }
+
+        init();
     </script>
 </body>
 </html>
