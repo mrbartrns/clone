@@ -5,6 +5,8 @@ const showingP = showing.querySelector("p");
 const modes = document.querySelectorAll(".mode");
 const ENTER = 13;
 const BACKSPACE = 8;
+const UP_ARROW_KEY = 38;
+const DOWN_ARROW_KEY = 40;
 const SELECTED = "selected";
 const action = document.querySelector(`.${SELECTED}`).dataset.type;
 
@@ -164,6 +166,16 @@ function init() {
             handleEnter();
         } else if (e.keyCode === BACKSPACE) {
             handleBackSpace();
+        } else if (e.keyCode === UP_ARROW_KEY) {
+            if (currentLine > 1) {
+                currentLine -= 1;
+                console.log(currentLine);
+            }
+        } else if (e.keyCode === DOWN_ARROW_KEY) {
+            if (currentLine < dialogObjects.length) {
+                currentLine += 1;
+                console.log(currentLine);
+            }
         }
     });
 
@@ -180,3 +192,5 @@ function init() {
 }
 
 init();
+
+//todo: whenever clicking 'submit'button, set all objects in localstorage and get localstorage and display it on the textarea
