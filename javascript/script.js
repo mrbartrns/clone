@@ -89,7 +89,6 @@ function getRow(textarea) {
 }
 
 function getDraggedRows(textarea, rowStart) {
-    rowStart = getRow(textarea);
     const txts = textarea.value;
     const txtsArr = txts.split("\n");
     const cursorEnd = textarea.selectionEnd;
@@ -185,9 +184,6 @@ function init() {
         currentLine = row;
         console.log(row);
         getType(row);
-        // if (scriptInput.selectionStart !== scriptInput.selectionEnd) {
-        //     console.log(getDraggedRows(scriptInput));
-        // }
     });
 }
 
