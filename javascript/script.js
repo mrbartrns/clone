@@ -12,7 +12,7 @@ const action = document.querySelector(`.${SELECTED}`).dataset.type;
 
 let dialogObjects = [];
 let stringsLength = 0;
-let currentLine = 0;
+let currentLine = 1;
 // END OF GLOBAL SCOPE'S VARIABLES
 
 function Dialog(action) {
