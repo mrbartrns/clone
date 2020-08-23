@@ -16,7 +16,8 @@ let currentLine = 1;
 // END OF GLOBAL SCOPE'S VARIABLES
 
 function Dialog(action) {
-    this.row = dialogObjects.length + 1;
+    // this.row = dialogObjects.length + 1;
+    this.row = 0;
     this.action = action;
     this.script = "";
 }
@@ -60,9 +61,9 @@ function getType(row) {
 }
 
 function refreshDialogs(strings) {
-    dialogObjects.forEach((object,index) => {
-        object.setRow(index + 1);
+    dialogObjects.forEach((object, index) => {
         object.setScript(strings[index]);
+        object.setRow(index + 1);
     })
 }
 
@@ -105,17 +106,24 @@ function getDraggedRows(textarea, rowStart) {
     }
 }
 
+
 function handleEnter() {
     const strings = getTextArr();
     const action = document.querySelector(`.${SELECTED}`).dataset.type;
     console.log(strings);
     const row = getRow(scriptInput);
-    currentLine = row;
-    const dialogObject = new Dialog(action);
-    dialogObjects.splice(row - 1, 0, dialogObject);
-    console.log(dialogObjects);
+    // if press enter just once > 현행 유지
+    // else: row - currentline 만큼의 오브젝트를 리스트에 추가
+    // CONST DIALOGOBJECT SHOULD BE IN FOR LOOP
+    for (let i = currentLine; i < row; i++) {
+        const dialogObject = new Dialog(action);
+        dialogObjects.splice(i, 0, dialogObject);
+        console.log(dialogObjects);
+    }
+    // dialogObjects.splice(row - 1, 0, dialogObject); //리스트의 맨 마지막에 추가하는 것
     refreshDialogs(strings);
     stringsLength = strings.length;
+    currentLine = row;
 }
 
 function handleBackSpace() {
@@ -190,3 +198,5 @@ function init() {
 init();
 
 //todo: whenever clicking 'submit'button, set all objects in localstorage and get localstorage and display it on the textarea
+//todo: handle checkbox. whenever number of lines get bigger, check box will be added number of lines
+//todo: do samething while key down
