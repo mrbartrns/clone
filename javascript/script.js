@@ -122,22 +122,25 @@ function handleEnter() {
     }
     // dialogObjects.splice(row - 1, 0, dialogObject); //리스트의 맨 마지막에 추가하는 것
     refreshDialogs(strings);
-    stringsLength = strings.length;
+    // stringsLength = strings.length;
     currentLine = row;
 }
 
+// backspace를 누르고 있을때, 마지막 것이 undefined 처리되는 버그가 존재 > 수정할것 > 수정완료
 function handleBackSpace() {
     const strings = getTextArr();
     const row = getRow(scriptInput);
-    currentLine = row;
-    let currentLength = strings.length;
-    let lengths = stringsLength - currentLength;
-    if (lengths > 0) {
-        dialogObjects.splice(row, lengths);
-        stringsLength = currentLength;
+    // let currentLength = strings.length;
+    // let lengths = stringsLength - currentLength;
+    if (currentLine !== row) {
+        dialogObjects.splice(row, currentLine - row);
         refreshDialogs(strings);
         console.log(dialogObjects);
+    } else {
+        dialogObjects[row - 1].setScript(strings[row - 1]);
+        console.log(dialogObjects);
     }
+    currentLine = row;
 }
 
 // todo: modify setUpMode when I select row showing action
@@ -199,4 +202,3 @@ init();
 
 //todo: whenever clicking 'submit'button, set all objects in localstorage and get localstorage and display it on the textarea
 //todo: handle checkbox. whenever number of lines get bigger, check box will be added number of lines
-//todo: do samething while key down
