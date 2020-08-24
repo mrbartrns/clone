@@ -3,6 +3,7 @@ const scriptInput = document.querySelector(".script");
 const showing = document.querySelector(".showing");
 const showingP = showing.querySelector("p");
 const modes = document.querySelectorAll(".mode");
+const submitBtn = document.querySelector(".script-submit");
 const ENTER = 13;
 const BACKSPACE = 8;
 const UP_ARROW_KEY = 38;
@@ -162,6 +163,9 @@ function setUpMode() {
 }
 
 function init() {            
+    // if objlist in localstorage;, get text from localStorages' object >>JSON.parse something
+    // loadScripts();
+
     const dialogObject = new Dialog(action);
     dialogObjects.push(dialogObject);
 
@@ -194,6 +198,10 @@ function init() {
         console.log(row);
         getType(row);
     });
+
+    submitBtn.addEventListener("click", function() {
+        //saveScript(); >> localStorage.set objects list and        
+    })
 }
 
 init();
