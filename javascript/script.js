@@ -11,7 +11,7 @@ const SELECTED = "selected";
 const action = document.querySelector(`.${SELECTED}`).dataset.type;
 
 let dialogObjects = [];
-let stringsLength = 0;
+// let stringsLength = 0;
 let currentLine = 1;
 // END OF GLOBAL SCOPE'S VARIABLES
 
@@ -112,8 +112,6 @@ function handleEnter() {
     const action = document.querySelector(`.${SELECTED}`).dataset.type;
     console.log(strings);
     const row = getRow(scriptInput);
-    // if press enter just once > 현행 유지
-    // else: row - currentline 만큼의 오브젝트를 리스트에 추가
     // CONST DIALOGOBJECT SHOULD BE IN FOR LOOP
     for (let i = currentLine; i < row; i++) {
         const dialogObject = new Dialog(action);
