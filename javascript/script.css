@@ -1,5 +1,7 @@
 textarea {
     font-family: 'Malgun Gothic';
+    resize: none;
+    outline: none;
 }
 
 button {

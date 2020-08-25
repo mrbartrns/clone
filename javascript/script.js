@@ -4,6 +4,7 @@ const showing = document.querySelector(".showing");
 const showingP = showing.querySelector("p");
 const modes = document.querySelectorAll(".mode");
 const submitBtn = document.querySelector(".script-submit");
+const delBtn = document.querySelector(".delete");
 const ENTER = 13;
 const BACKSPACE = 8;
 const UP_ARROW_KEY = 38;
@@ -107,6 +108,18 @@ function getDraggedRows(textarea, rowStart) {
     }
 }
 
+function deleteAll() {
+    // delete localStorage and textContent on the txtarea
+    // textarea is in the form so must use value, not textContent
+    scriptInput.value = "";
+    localStorage.removeItem("savedScripts");
+    const action = document.querySelector(`.${SELECTED}`).dataset.type;
+    const dialogObject = new Dialog(action);
+    dialogObjects = [];
+    dialogObjects.push(dialogObject);
+    console.log(dialogObjects);
+}
+
 function saveScripts() {
     const strings = getTextArr();
     const lastString = strings[strings.length -1]
@@ -125,6 +138,7 @@ function loadScripts(parsed) {
     }
     console.log(dialogObjects);
     refreshDialogs(texts);
+    // paint on the textarea
     scriptInput.textContent = texts.join('\n');
 }
 
@@ -227,10 +241,14 @@ function init() {
 
     submitBtn.addEventListener("click", function() {
         saveScripts(); 
+    });
+
+    delBtn.addEventListener("click", () => {
+        deleteAll();
     })
 }
 
 init();
 
-//todo: whenever clicking 'submit'button, set all objects in localstorage and get localstorage and display it on the textarea
 //todo: handle checkbox. whenever number of lines get bigger, check box will be added number of lines
+//todo: make delete all function
