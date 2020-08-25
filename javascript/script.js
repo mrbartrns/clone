@@ -107,6 +107,26 @@ function getDraggedRows(textarea, rowStart) {
     }
 }
 
+function saveScripts() {
+    const strings = getTextArr();
+    const lastString = strings[strings.length -1]
+    dialogObjects[dialogObjects.length - 1].setScript(lastString);
+    localStorage.setItem("savedScripts", JSON.stringify(dialogObjects));
+    console.log("done");
+}
+
+function loadScripts(parsed) {
+    let texts = [];
+    for (let i = 0; i < parsed.length; i++) {
+        const text = parsed[i].script;
+        texts.push(text);
+        const dialogObject = new Dialog(parsed[i].action);
+        dialogObjects.splice(i, 0, dialogObject);
+    }
+    console.log(dialogObjects);
+    refreshDialogs(texts);
+    scriptInput.textContent = texts.join('\n');
+}
 
 function handleEnter() {
     const strings = getTextArr();
@@ -165,10 +185,16 @@ function setUpMode() {
 function init() {            
     // if objlist in localstorage;, get text from localStorages' object >>JSON.parse something
     // loadScripts();
-
-    const dialogObject = new Dialog(action);
-    dialogObjects.push(dialogObject);
-
+    // else
+    const parsedDialogObjects = JSON.parse(localStorage.getItem("savedScripts"));
+    if (parsedDialogObjects !== null) {
+        loadScripts(parsedDialogObjects);
+    } else {
+        console.log('no parsed dialog objects');
+        const dialogObject = new Dialog(action);
+        dialogObjects.push(dialogObject);
+    }
+    
     modes.forEach( mode => {
         mode.addEventListener("click", setUpMode);
     });
@@ -200,7 +226,7 @@ function init() {
     });
 
     submitBtn.addEventListener("click", function() {
-        //saveScript(); >> localStorage.set objects list and        
+        saveScripts(); 
     })
 }
 
