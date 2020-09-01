@@ -13,3 +13,52 @@ What is a framework? How is it different from a library?
 > framework 
 Why are we using Express?
 */
+// 브라우저에서 Request가 왔을 때 서버에서 어떤 작업을 할 지 Router를 통해서 설정
+// 즉 라우터는 특정한 요청을 듣고 요청에 따라 다른 코드를 실행한다
+// make app require express
+// listening for the request(get)
+// listening for the request(post)
+const express = require("express");
+const app = express();
+
+// ROUTES:
+// "/" => 'Hi there!'
+// two different parameters (url of the path which is slash, call back function(request(object, information about the request that was made that triggered this rout), response))
+app.get("/", (req, res) => {
+    res.send('hi!');
+});
+
+// "/bye" => "Goodbye!"
+app.get("/bye", (req, res) => {
+    res.send('bye!');
+});
+// "/dog" => "MEOW!"
+app.get("/dog", (req, res) => {
+    console.log("some one made a request to /dog");
+    res.send("MEOW!");
+});
+
+app.get("/r/:subredditName/", (req, res) => {
+    const subreddit = req.params.subredditName;
+    console.log(req.params);
+    res.send(`WELCOME TO THE ${subreddit.toUpperCase()} SUBREDDIT`);
+});
+
+app.get("/r/:subbredtName/comments/:id/:title", (req, res) => {
+    res.send("WELCOME TO COMMENTS PAGE!");
+});
+
+// if I order first, all hompages will be sended you are a star
+app.get("*", (req, res) => {
+    res.send("YOR ARE A STAR!");
+});
+
+
+// app.get("/r/:subredditName/comments/id/title/")
+
+// this is path variables
+// Tell Express to listen for requests (start server)
+app.listen(3000, () => {
+    console.log("Server has started");
+});
+// any time I change something, I have to restart server
