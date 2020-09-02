@@ -1,2 +1,11 @@
+<%- include("partials/header") %>
 <h1>You fell in love with: <%= dogVar.toUpperCase() %> </h1>
+<% if (dogVar.toLowerCase() === 'rusty') { %>
+    <p>GOOD CHOICE! Rusty is the best</p>
+<% } %>
 <p>This is from love.ejs file</p>
+
+<!-- to different types of signs -->
+<!--<`%= 내부의 값을 html에 즉시 추가%> -->
+<!-- <`% %> -->
+<%- include("partials/footer") %>

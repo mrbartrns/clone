@@ -1,5 +1,5 @@
 {
-  "name": "moreExpress",
+  "name": "ejsExamples",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.5",
     "express": "^4.17.1"
   }
 }
