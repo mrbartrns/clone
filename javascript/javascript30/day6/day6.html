@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const cities = [];
+  fetch(endpoint)
+    .then(blob => blob.json())
+    .then(data => cities.push(...data));
+    
+  const search = document.querySelector(".search");
+  const ul = document.querySelector(".suggestions");
+
+  function paintLists(value) {
+    const lis = document.querySelectorAll("li");
+    if (!value) {
+      ul.innerHTML = "";
+      cities.forEach(city => {
+        const li = document.createElement("li");
+        const text = `${city.city}, ${city.state}`;
+        li.textContent = text;
+        const span = document.createElement("span");
+        span.textContent = city.population;
+        span.classList.add("population");
+        li.appendChild(span);
+        ul.appendChild(li);
+      });
+    } else {
+      ul.innerHTML = "";
+      someCities = cities
+        .filter(city => {
+          const cityName = city.city.toLowerCase();
+          const stateName = city.state.toLowerCase();
+        return (cityName.includes(value) || stateName.includes(value));
+      })
+        .forEach(city => {
+          const li = document.createElement("li");
+          for (let i = 0; i <2; i++) {
+            const span = document.createElement("span");
+            li.appendChild(span);
+          }
+          const spans = li.querySelectorAll("span");
+          spans[0].classList.add("name");
+          spans[1].classList.add("population");
+          ul.appendChild(li);
+          paintText();
+        });
+    }
+  }
+
+  function paintText() {
+    const text = `${this.city}, ${this.state}`;
+    const name = document.querySelector("name");
+    for (let i = 0; i < text.length; i++) {
+      const span = document.createElement("span");
+
+      text[i]
+    }
+  }
+
+  search.addEventListener("input", function() {
+    const value = search.value.toLowerCase();
+    paintLists(value);
+  })
+</script>
+</body>
+</html>
