@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let myFirstPromise = new Promise((resolve, reject) => {
+            // we can resolve something when what we were doing asychronously was successful, and reject something when it failed
+            // in this example, we use setTimeOut to simulate async code.
+            // in reality, we will probably be using something like XHR an HTML5 API.
+            setTimeout(function() {
+                resolve("Success!") // resolve(successful) => return string Success! when successfuly doing sthing
+            }, 250)
+        });
+        myFirstPromise.then((successMsg) => {
+            console.log("Yay!", successMsg);
+        })
+    </script>
+</body>
+</html>

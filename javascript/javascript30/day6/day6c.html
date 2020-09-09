@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type Ahead 👀</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form class="search-form">
+        <input type="text" class="search" placeholder="City or State">
+        <ul class="suggestions">
+            <li>Filter for a city</li>
+            <li>or a state</li>
+        </ul>
+    </form>
+    <script>
+        const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+        const cities = [];
+        /**
+        * 설계 먼저 하기: 기능별로 쪼개기
+        * 1. url로부터 json파일을 얻어오기
+        * 2. json으로 부터 만든 배열을 입력받은 값과 매칭시키기 (filter 사용) -> core부터 기능구현하기
+        * 3. filter된 배열을 display하기
+        */
+        fetch(endpoint) // Promise result: Response
+            .then(blob => blob.json()) //Response result: Promise
+            .then(data => cities.push(...data)); //Promise result: Array
+        
+        function findMatch(value, cities) {
+            return cities.filter(place => {
+                const regex = new RegExp(value, 'gi');
+                // if matched, return Array => this is regardless of return type
+                return place.city.match(regex) || place.state.match(regex);
+            });
+        }
+
+        function makeCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
+        }
+
+        function paintMatch() {
+            const matchArr = findMatch(this.value, cities);
+            // map returns new type (array)
+            const html = matchArr.map(place => {
+                const regex = new RegExp(this.value, 'gi');
+                const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+                const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+                return `
+                    <li>
+                        <span class="name">${cityName}, ${stateName}</span>
+                        <span class="population">${makeCommas(place.population)}</span>
+                    </li>
+                `
+            }).join('');
+            suggestions.innerHTML = html;
+        }
+
+        const searchInput = document.querySelector(".search");
+        const suggestions = document.querySelector(".suggestions");
+        searchInput.addEventListener("change", paintMatch);
+        searchInput.addEventListener("keyup", paintMatch);
+    </script>
+</body>
+</html>

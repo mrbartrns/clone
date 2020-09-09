@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span class="email">hi-my-nameIs1234@something.com</span>
+    <div class="write"></div>
+</body>
+<script>
+    const span = document.querySelector(".email");
+    const div = document.querySelector(".write");
+    const text = span.textContent;
+    const regex = /([\w\-\d]+)(?=@)/g;
+    const arr = text.match(regex);
+    console.log(arr);
+    const email = arr[0]
+    const domain = arr[1];
+    const html = `
+        <li>
+            <span>email: ${email}</span>
+        </li>
+        <li>
+            <span>domain: ${domain}</span>
+        </li>`;
+    div.innerHTML = html;
+
+</script>
+</html>

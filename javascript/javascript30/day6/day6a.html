@@ -26,7 +26,7 @@ function findMatches(wordToMatch, cities) { // wordToMatch: keyWords, cities: ar
     return cities.filter(place => {
         // here we need to figure out if the city on state matches what was searched
         const regex = new RegExp(wordToMatch, 'gi')
-        return place.city.match(regex) || place.city.match(regex);
+        return place.city.match(regex) || place.state.match(regex);
     });
 }
 
@@ -39,7 +39,7 @@ function displayMatch() {
     const html = matchArray.map(place => {
         const regex = new RegExp(this.value, 'gi');
         const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
-        const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`)
+        const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
         return `
             <li>
                 <span class="name">${cityName}, ${stateName}</span>
@@ -52,7 +52,7 @@ function displayMatch() {
 
 const searchInput = document.querySelector(".search");
 const suggestions = document.querySelector(".suggestions");
-searchInput.addEventListener('change', findMatches);
+searchInput.addEventListener('change', displayMatch);
 searchInput.addEventListener('keyup',displayMatch)
 </script>
 </body>

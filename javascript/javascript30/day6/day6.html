@@ -18,63 +18,40 @@
   const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
   const cities = [];
   fetch(endpoint)
-    .then(blob => blob.json())
-    .then(data => cities.push(...data));
-    
-  const search = document.querySelector(".search");
-  const ul = document.querySelector(".suggestions");
-
-  function paintLists(value) {
-    const lis = document.querySelectorAll("li");
-    if (!value) {
-      ul.innerHTML = "";
-      cities.forEach(city => {
-        const li = document.createElement("li");
-        const text = `${city.city}, ${city.state}`;
-        li.textContent = text;
-        const span = document.createElement("span");
-        span.textContent = city.population;
-        span.classList.add("population");
-        li.appendChild(span);
-        ul.appendChild(li);
-      });
-    } else {
-      ul.innerHTML = "";
-      someCities = cities
-        .filter(city => {
-          const cityName = city.city.toLowerCase();
-          const stateName = city.state.toLowerCase();
-        return (cityName.includes(value) || stateName.includes(value));
-      })
-        .forEach(city => {
-          const li = document.createElement("li");
-          for (let i = 0; i <2; i++) {
-            const span = document.createElement("span");
-            li.appendChild(span);
-          }
-          const spans = li.querySelectorAll("span");
-          spans[0].classList.add("name");
-          spans[1].classList.add("population");
-          ul.appendChild(li);
-          paintText();
-        });
-    }
+    .then(response => response.json())
+    .then(data => cities.push(data));
+  
+  function findMatches(keyword, cities) {
+    // keywords: string, cities: array
+    // return: filtered array
+    return cities.filter(place => {
+      const regex = new RegExp(keyword, 'gi');
+      return place.city.match(regex) || place.state.match(regex); // match function is like include
+    });
   }
 
-  function paintText() {
-    const text = `${this.city}, ${this.state}`;
-    const name = document.querySelector("name");
-    for (let i = 0; i < text.length; i++) {
-      const span = document.createElement("span");
-
-      text[i]
-    }
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  search.addEventListener("input", function() {
-    const value = search.value.toLowerCase();
-    paintLists(value);
-  })
+  function displayMatch() {
+    const matchArray = findMatches(this.value, cities);
+    const html = matchArray.map(place => {
+      const regex = new RegExp(this.value, 'gi'); //regex is object, this.value is string
+      const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+      const stateName = place.city.replace(regex, `<span class="hl>${this.value}</span>`);
+      return `
+        <li>
+          <span class="name">${place.city}, ${place.state}</span>
+          <span class="population">${place.population}</span>
+        </li>`
+    })
+  }
+
+  const searchInput = document.querySelector(".search");
+  const suggestions = document.querySelector(".suggestions");
+  searchInput.addEventListener("change", displayMatch);
+  searchInput.addEventlistener("keyup", displayMatch);
 </script>
 </body>
 </html>
