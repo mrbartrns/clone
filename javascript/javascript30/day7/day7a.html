@@ -61,7 +61,7 @@
         // Array.prototype.findIndex()
         // Find the comment with this ID
         // delete the comment with the ID of 823423
-        const index = comments.findIndex(commetn => comment.id === 823423);
+        const index = comments.findIndex(comment => comment.id === 823423);
         const newComments = [
             ...comments.slice(0, index),
             ...comments.slice(index + 1) //인덱스만 제외하기!
