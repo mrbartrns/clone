@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+<script>
+  // 원에 대한 정보를 입력받기
+  // 원 그리기
+  const canvas = document.querySelector("#draw");
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width = window.innerWidth;
+  const height = canvas.height = window.innerHeight;
+
+  let clicked = false;
+
+  function Circle(x, y, radius, color) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+  }
+
+  Circle.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  // let ball = new Circle(100, 200, 30, 'rgb(0, 0, 0)');
+  // ball.draw();
+
+  function updateCircle(e) {
+    if (clicked) {
+      console.log(e);
+      const x = e.x;
+      const y = e.y;
+      const ball = new Circle(x, y, 30, 'rgb(0, 0, 0)');
+      ball.draw();
+    }
+  }
+  canvas.addEventListener("mousedown", () => clicked = true);
+  canvas.addEventListener("mouseup", () => clicked = false);
+  canvas.addEventListener("mousemove", updateCircle);
+</script>
+</body>
+</html>

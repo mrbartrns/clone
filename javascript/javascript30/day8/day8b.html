@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="draw" width="800" height="800"></canvas>
+    <script>
+        // packaging 연습
+        const canvas = document.querySelector("#draw");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+
+        ctx.lineWidth = 100;
+        ctx.strokeStyle = '#BADA55';
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+
+        let clicked = false;
+        let hue = 0;
+        let lastX = 0;
+        let lastY = 0;
+        let direction = true;
+
+        function draw(e) {
+            if (!clicked) return;
+            ctx.beginPath();
+            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+            ctx.moveTo(0, 0);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+            hue++;
+            if (hue >= 360) {
+                hue = 0;
+            }
+            if (line.width >= 100 || line.width <= 1) {
+                direction = !direction;
+                if (direction) {
+                    line.width++;
+                } else {
+                    line.width--;
+                }
+            }
+        }
+
+        canvas.addEventListener("mousedown", () => {
+            clicked = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", () => clicked = false);
+        canvas.addEventListener("mouseout", () => clicked = false);
+    </script>
+</body>
+</html>
