@@ -7,13 +7,15 @@ const fs = require('fs');
 
 // const text = fs.readFileSync('textfile.txt', 'utf8');
 // fs.readFile('textfile.txt', 'utf8', (err, data) => {
+    // if(err) {return console.log(err)};
 //     console.log(data, '1');
 // });
 // console.log(text);
 
 const text = 'hello, world!';
 fs.writeFile('textWrite.txt', text, 'utf8', (err) => {
-    console.log('WRITE FILE ASYNC COMPLETE');
+    if (err) {console.log(err)}; // early return
+    console.log('WRITE FILE ASYNC COMPLETE'); // else
 });
 
 fs.writeFileSync('textWriteSync.txt', text, 'utf8');
