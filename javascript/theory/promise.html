@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    // 서버에서 제대로 응답을 받아오면 resolve() 메서드를 호출하고, 응답이 없으면 reject 메서드를 호출
+    // 호출된 메서드에 따라 then()이나 catch()로 분기하여 응답 결과 또는 오류를 출력
+    function getData() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => resolve(1), 2000);
+        })
+    }
+    getdata()
+    .then(result => {
+        console.log(result);
+        return result + 10;
+    })
+    .then(result => {
+        console.log(result);
+        return result + 10;
+    })
+    .then(result => {
+        console.log(result);
+    });
+    
+    // getData(userInfo)
+    // .then(parseValue)
+    // .then(auth)
+    // .then(display);
+    // const userInfo = {id: 'id', pw: 'pw'};
+    
+    // function parseValue() {
+    //     return new Promise(
+    //         //
+    //     );
+    // }
+
+    // function auth() {
+    //     return new Promise(
+    //         //
+    //     );
+    // }
+
+    // function display() {
+    //     return new Promise(
+
+    //     )
+    // }
+    
+
+    function get() {
+        return new Promise((resolve, reject) => {
+            reject('failed');
+        });
+    }
+    // 1. then의 첫번째 인자로 에러를 처리가능
+    // get().then(onFulfilledFunction, onRejectedFunction)
+    // 2. catch로 가능
+    // get().then().catch();
+</script>
+</body>
+</html>
