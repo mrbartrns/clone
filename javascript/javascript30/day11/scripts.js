@@ -66,7 +66,12 @@ toggle.addEventListener("click", () => {
 });
 btns.forEach(btn => btn.addEventListener('click', handleClick));
 ranges.forEach(range => range.addEventListener('input', handleInput));
+
+let mousedown = false;
 progress.addEventListener("click", showCurrentLocation);
+progress.addEventListener('mousemove', (e) => mousedown && scrub(e)); // if boolean is true, do after &&
+progress.addEventListener('mousedown', () => mousedown = true);
+progress.addEventListener('mouseup', () => mousedown = false)
 
 
 // have to make documentElement played: percentage;
