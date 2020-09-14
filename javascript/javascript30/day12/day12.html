@@ -7,6 +7,24 @@
 </head>
 <body>
 <script>
+  let pressed = [];
+  const secretCode = 'wesbos';
+
+  function handleKey(e) {
+    console.log(e.key);
+    pressed.push(e.key);
+    console.log(-secretCode.length - 1);
+    console.log(pressed.length - secretCode.length);
+    pressed.splice(-secretCode.length -1, pressed.length - secretCode.length);
+    // pressed.splice(0, pressed.length - secretCode.length); if it is 0, okay
+    if (pressed.join('').includes(secretCode)) {
+      console.log('ding ding');
+      cornify_add();
+    }
+    console.log(pressed);
+  }
+
+  document.addEventListener("keyup", handleKey);
 </script>
 </body>
 </html>
