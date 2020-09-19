@@ -2,7 +2,6 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { response } = require('express');
 
 const app = express();
 
