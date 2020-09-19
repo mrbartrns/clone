@@ -55,6 +55,8 @@
       return newA > newB ? 1 : -1;
     });
 
+    // bandName.replace(/^(the |^a |^an)/i, ('')).trim();
+
   const ul = document.querySelector("#bands");
   ul.innerHTML = bands.map(band => {
     return `
