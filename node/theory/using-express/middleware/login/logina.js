@@ -1,16 +1,16 @@
 const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const coockieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
-app.use(coockieParser());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/',(req, res) => {
     if(req.cookies.auth) {
-        res.send('<h1>login success');
+        res.send('<h1>login success</h1>');
     } else {
         res.redirect('/login');
     }
