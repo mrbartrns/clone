@@ -8,7 +8,8 @@ app.use(multipart({ uploadDir: __dirname + '/multipart'}));
 
 app.get('/', (req, res) => {
     fs.readFile('upload.html', (err, data) => {
-        if (!data) {console.log(err)}
+        if (!data) console.log(err);
+        // file을 업로드 할 시에는 send를 사용한다
         res.send(data.toString());
     });
 });
