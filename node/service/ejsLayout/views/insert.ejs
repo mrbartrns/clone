@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <form method="POST">
+    <fieldset>
+        <legend>Insert Data</legend>
+        <table>
+            <tr>
+                <td><label for="name">name</label></td>
+                <td><input type="text" id="name" name="name"></td>
+            </tr>
+            <tr>
+                <td><label for="modelnumber">model number</label></td>
+                <td><input type="text" id="modelnumber" name="modelnumber"></td>
+            </tr>
+            <tr>
+                <td><label for="series">series</label></td>
+                <td><input type="text" id="series" name="series"></td>
+            </tr>
+        </table>
+        <input type="submit"/>
+    </fieldset>
+    </form>
+</body>
+</html>

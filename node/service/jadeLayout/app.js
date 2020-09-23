@@ -21,15 +21,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.get('/product', (req, res) => {
-  res.render('product', {title: 'Product Page'}); // index.jade 파일을 지정하지 않아도 폴더 이름을 지정할 경우 자동으로 선택해줌
-});
-app.get('/product/insert', (req, res) => {
-  res.render('product/insert', {title: 'Insert Page'});
-});
-app.get('/product/edit', (req, res) => {
-  res.render('product/edit', {title: 'Edit Page'});
-});
+// app.get('/product', (req, res) => {
+//   res.render('product', {title: 'Product Page'}); // index.jade 파일을 지정하지 않아도 폴더 이름을 지정할 경우 자동으로 선택해줌
+// });
+// app.get('/product/insert', (req, res) => {
+//   res.render('product/insert', {title: 'Insert Page'});
+// });
+// app.get('/product/edit', (req, res) => {
+//   res.render('product/edit', {title: 'Edit Page'});
+// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
+  // set locals, only providing error in development (development 환경으로 실행 시 조건문 부분이 실행)
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
@@ -46,5 +46,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+console.log(app.get('env'));
 
 module.exports = app;
