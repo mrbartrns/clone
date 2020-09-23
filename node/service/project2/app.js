@@ -62,7 +62,7 @@ app.get('/edit/:id', (req, res) => {
 
 app.post('/edit/:id', (req, res) => {
     const body = req.body;
-
+    
     client.query('UPDATE Products SET name=?, modelnumber=?, series=? WHERE id = ?', [
         body.name, body.modelnumber, body.series, req.params.id
     ], () => {
