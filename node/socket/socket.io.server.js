@@ -33,6 +33,7 @@ const io = socketio.listen(server);
 //         // broadcast event
 //         socket.broadcast.emit('smart', data);
 //     });
+
 // private event
 io.sockets.on('connection', (socket) => {
     id = socket.id;

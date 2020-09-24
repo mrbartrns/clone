@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    <div class="display">
+        <div class="display-channel"></div>
+        <div class="log"></div>
+    </div>
+    <div class="interface">
+        <input type="number" class="channel" id="channel">
+        <button type="button" class="button" id="change-channel">채널 변경</button>
+        <input type="text" class="chat" id="chat">
+        <button type="button" id="submit">Submit</button>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        window.onload = () => {
+            const display = document.querySelector('.display-channel');
+            const log = document.querySelector('.log');
+            const channel = document.querySelector('.channel');
+            const text = document.querySelector('.chat');
+            const btn = document.querySelector('#submit');
+            const changeChannel = document.querySelector('#change-channel');
+            const socket = io.connect();
+            socket.on('welecome!', (data) => {
+                const p = document.createElement('p');
+                p.textContent = data;
+            });
+            changeChannel.addEventListener('click', () => {
+                const value = channel.value;
+                socket.emit('channel', value);
+                display.textContent = value;
+                channel.classList.toggle('hidden');
+            });
+            btn.addEventListener('click', () => {
+                const value = text.value;
+                if (!value) return;
+                socket.emit('message', value);
+                text.value = "";
+            });
+            socket.on('send', data => {
+                const p = document.createElement('p');
+                p.textContent = `${data.date} - ${data.id} : ${data.text}`;
+                log.appendChild(p);
+            });
+        }
+    </script>
