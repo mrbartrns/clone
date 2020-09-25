@@ -3,7 +3,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
     fs.readFile('ex1.html', (err, data) => {
@@ -18,6 +18,7 @@ app.get('/dataGet',(req, res) => {
     console.log('요청을 받았습니다.');
     fs.readFile('ex2.html', 'utf8', (err, data) => {
         if (err) throw err;
+        // data를 클라이언트에 보낼때
         res.status(200).send(data);
     });
 });

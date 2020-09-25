@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .line {
+        overflow: hidden;
+    }
+
+    .seat {
+        margin: 2px;
+        float: left;
+        width: 30px;
+        height: 30px;
+        border-radius: 3px;
+    }
+
+    .enable {
+        background-color: gray;
+    }
+
+    .enable:hover {
+        background-color: black;
+    }
+
+    .disable {
+        background-color: red;
+    }
+</style>
+<body>
+    
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io.connect();
+    const body = document.querySelector('body');
+    window.onload = () => {
+        const seats = [];
+        // make seats
+        fetch('/seats')
+            .then(body => body.json())
+            .then(data => {
+                seats.push(...data);
+                displaySeats(seats);
+            });
+    }
+
+    function displaySeats(seats) {
+        seats.forEach( (line, y) => {
+                    const divLine = document.createElement('div');
+                    divLine.classList.add('line');
+                    line.forEach((seat, x) => {
+                        const div = document.createElement('div');
+                        div.classList.add ('seat')
+                        div.dataset.x = x;
+                        div.dataset.y = y;
+                        if (seat === 1) {
+                            div.classList.add('enable');
+                            div.addEventListener('click', onClickSeat);
+                        } else if (seat === 2) {
+                            div.classList.add('disable');
+                        }
+                        divLine.appendChild(div);
+                    });
+                    body.appendChild(divLine);
+                });        
+    }
+
+    function onClickSeat() {
+        console.log(this);
+        const x = Number(this.dataset.x);
+        const y = Number(this.dataset.y);
+        console.log(x, y);
+        if (confirm('좌석을 예약하시겠습니까?')) {
+            this.removeEventListener('click', onClickSeat)
+            socket.emit('reserve', {
+                x: x,
+                y: y
+            });
+        } else {
+            alert('예약이 취소되었습니다.');
+        }
+    }
+
+    socket.on('reserve', data => {
+        const target = document.querySelector(`div[data-x="${data.x}"][data-y="${data.y}"]`);
+        console.log(target);
+        target.classList.remove('enable');
+        target.classList.add('disable');
+    });
+</script>
+</body>
+</html>
