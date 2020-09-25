@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button type="button" class="request">Make a Request</button>
+    <script>
+        function getData() {
+            let httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = () => {
+                if (httpRequest.readyState === 4 && httpRequest.status === 200) {
+                    alert(httpRequest.responseText);
+                }
+            }
+            httpRequest.open('GET', '/dataGet', true);
+            httpRequest.send();
+        }
+
+        const req = document.querySelector('.request');
+        req.addEventListener('click', getData);
+    </script>
+</body>
+</html>
