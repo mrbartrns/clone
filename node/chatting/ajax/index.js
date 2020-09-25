@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
     })
 });
 
-// express로 작업할 시 요청 url을 지정해줘야 함!
+// express로 작업할 시 요청 url을 지정해줘야 함! >> 그냥 redirect랑 비슷
 app.get('/dataGet',(req, res) => {
     console.log('요청을 받았습니다.');
     fs.readFile('ex2.html', 'utf8', (err, data) => {
