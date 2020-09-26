@@ -38,5 +38,9 @@ io.on('connection', (socket) => {
     socket.on('reserve', data => {
         seats[data.y][data.x] = 2;
         io.emit('reserve', data);
+    });
+    socket.on('cancel', data => {
+        seats[data.y][data.x] = 1;
+        io.emit('cancel', data);
     })
 })

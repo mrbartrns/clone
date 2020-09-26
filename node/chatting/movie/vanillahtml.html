@@ -34,38 +34,38 @@
     
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    const socket = io.connect();
-    const body = document.querySelector('body');
-    window.onload = () => {
-        const seats = [];
-        // make seats
-        fetch('/seats')
-            .then(body => body.json())
-            .then(data => {
-                seats.push(...data);
-                displaySeats(seats);
-            });
-    }
+const socket = io.connect();
+const body = document.querySelector('body');
+window.onload = () => {
+    // make seats
+    const seats = [];
+    fetch('/seats')
+        .then(body => body.json())
+        .then(data => {
+            seats.push(...data);
+            displaySeats(seats);
+        });
 
     function displaySeats(seats) {
-        seats.forEach( (line, y) => {
-                    const divLine = document.createElement('div');
-                    divLine.classList.add('line');
-                    line.forEach((seat, x) => {
-                        const div = document.createElement('div');
-                        div.classList.add ('seat')
-                        div.dataset.x = x;
-                        div.dataset.y = y;
-                        if (seat === 1) {
-                            div.classList.add('enable');
-                            div.addEventListener('click', onClickSeat);
-                        } else if (seat === 2) {
-                            div.classList.add('disable');
-                        }
-                        divLine.appendChild(div);
-                    });
-                    body.appendChild(divLine);
-                });        
+            seats.forEach( (line, y) => {
+            const divLine = document.createElement('div');
+            divLine.classList.add('line');
+            line.forEach((seat, x) => {
+                const div = document.createElement('div');
+                div.classList.add ('seat')
+                div.dataset.x = x;
+                div.dataset.y = y;
+                if (seat === 1) {
+                    div.classList.add('enable');
+                    div.addEventListener('click', onClickSeat);
+                } else if (seat === 2) {
+                    div.classList.add('disable');
+                    div.addEventListener('click', cancelSeat);
+                }
+                divLine.appendChild(div);
+            });
+            body.appendChild(divLine);
+        });        
     }
 
     function onClickSeat() {
@@ -74,13 +74,29 @@
         const y = Number(this.dataset.y);
         console.log(x, y);
         if (confirm('좌석을 예약하시겠습니까?')) {
-            this.removeEventListener('click', onClickSeat)
             socket.emit('reserve', {
                 x: x,
                 y: y
             });
+            this.removeEventListener('click', onClickSeat);
+            this.addEventListener('click', cancelSeat);
         } else {
             alert('예약이 취소되었습니다.');
+        }
+    }
+
+    function cancelSeat() {
+        const x = Number(this.dataset.x);
+        const y = Number(this.dataset.y);
+        if (confirm('예약을 취소하시겠습니까?')) {
+            socket.emit('cancel', {
+                x: x,
+                y: y
+            });
+            this.removeEventListener('click', cancelSeat);
+            this.addEventListener('click', onClickSeat);
+        } else {
+            alert('예약이 취소되지 않았습니다.');
         }
     }
 
@@ -90,6 +106,16 @@
         target.classList.remove('enable');
         target.classList.add('disable');
     });
+
+    socket.on('cancel', data => {
+        const target = document.querySelector(`div[data-x="${data.x}"][data-y="${data.y}"]`);
+        console.log(target);
+        target.classList.remove('disable');
+        target.classList.add('enable');
+    });
+}
+
+    
 </script>
 </body>
 </html>
