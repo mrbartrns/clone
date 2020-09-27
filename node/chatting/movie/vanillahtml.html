@@ -31,11 +31,17 @@
     }
 </style>
 <body>
-    
+    <div class="interface">
+        <input type="number" id="number-of-people" value="1" min="1" max="4"/>
+        <button type="button" id="people">Submit</button>
+    </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const socket = io.connect();
 const body = document.querySelector('body');
+const peopleBtn = document.querySelector('#people');
+const numOfPeople = document.querySelector('#number-of-people');
+
 window.onload = () => {
     // make seats
     const seats = [];
@@ -45,7 +51,8 @@ window.onload = () => {
             seats.push(...data);
             displaySeats(seats);
         });
-
+    
+    // data의 형태: list,
     function displaySeats(seats) {
             seats.forEach( (line, y) => {
             const divLine = document.createElement('div');
@@ -69,15 +76,19 @@ window.onload = () => {
     }
 
     function onClickSeat() {
-        console.log(this);
-        const x = Number(this.dataset.x);
-        const y = Number(this.dataset.y);
-        console.log(x, y);
+        const x = Number(this.dataset.x), y = Number(this.dataset.y);
+        const picked = [];
+        const people = numOfPeople.value;
+        for (let i = 0; i < people; i++) {
+            const seat = {x: x + i, y: y};
+            const target = document.querySelector(`div[data-x="${seat.x}"][data-y="${seat.y}"]`);
+            if (target.classList.contains('enable')) {
+                picked.push(seat);
+            }
+        }
+        console.log(picked);
         if (confirm('좌석을 예약하시겠습니까?')) {
-            socket.emit('reserve', {
-                x: x,
-                y: y
-            });
+            socket.emit('reserve', picked);
             this.removeEventListener('click', onClickSeat);
             this.addEventListener('click', cancelSeat);
         } else {
@@ -86,8 +97,7 @@ window.onload = () => {
     }
 
     function cancelSeat() {
-        const x = Number(this.dataset.x);
-        const y = Number(this.dataset.y);
+        const x = Number(this.dataset.x), y = Number(this.dataset.y);
         if (confirm('예약을 취소하시겠습니까?')) {
             socket.emit('cancel', {
                 x: x,
@@ -99,20 +109,25 @@ window.onload = () => {
             alert('예약이 취소되지 않았습니다.');
         }
     }
+    // 합치기
 
     socket.on('reserve', data => {
-        const target = document.querySelector(`div[data-x="${data.x}"][data-y="${data.y}"]`);
-        console.log(target);
-        target.classList.remove('enable');
-        target.classList.add('disable');
+        data.forEach(seat => {
+            const target = document.querySelector(`div[data-x="${seat.x}"][data-y="${seat.y}"]`);
+            target.classList.remove('enable');
+            target.classList.add('disable');
+        });
     });
 
     socket.on('cancel', data => {
         const target = document.querySelector(`div[data-x="${data.x}"][data-y="${data.y}"]`);
-        console.log(target);
         target.classList.remove('disable');
         target.classList.add('enable');
     });
+
+    // peopleBtn.addEventListener('click', () => {
+    //     const value = numOfPeople.value;
+    // })
 }
 
     

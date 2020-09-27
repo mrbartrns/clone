@@ -36,7 +36,10 @@ server.listen(3000, () => console.log('server running at port 3000'));
 const io = socketio.listen(server);
 io.on('connection', (socket) => {
     socket.on('reserve', data => {
-        seats[data.y][data.x] = 2;
+        console.log(data);
+        data.forEach(seat => {
+            seats[seat.y][seat.x] = 2;
+        });
         io.emit('reserve', data);
     });
     socket.on('cancel', data => {
