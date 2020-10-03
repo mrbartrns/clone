@@ -1,0 +1,22 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.login-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box fieldset {
+  padding: 30px;
+}
+
+.login-btn {
+  float: right;
+}
