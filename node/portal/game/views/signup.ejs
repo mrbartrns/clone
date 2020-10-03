@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>로그인 페이지</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>Game portal에 입장하기 위해서 로그인하세요.</h1>
+        <form method="POST">
+            <div class="login-box signup-box">
+                <fieldset>
+                    <legend>회원 가입</legend>
+                        <table>
+                            <tr>
+                                <td><label for="id">ID</label></td>
+                                <td><input type="text" placeHolder="your ID" name="userid" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="password">Password</label></td>
+                                <td><input type="password" placeholder="your Password" name="userpassword" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="email">Email</label></td>
+                                <td><input type="email" placeholder="your Email" name="useremail" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="email">Phone Number</label></td>
+                                <td><input type="email" placeholder="your Phonenumber" name="userphone Number"></td>
+                            </tr>
+                        </table>
+                        <button type="submit" class="btn">제출하기</button>
+                </fieldset>
+            </div>
+        </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io.connect();
+    </script>
+    </body>
+</html>

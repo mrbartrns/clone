@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>로그인 페이지</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>Game portal에 입장하기 위해서 로그인하세요.</h1>
+        <form method="POST">
+            <div class="login-box">
+                <fieldset>
+                    <legend>로그인</legend>
+                        <table>
+                            <tr>
+                                <td><label for="id">ID</label></td>
+                                <td><input type="text" placeHolder="your ID" name="userid" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="password">Password</label></td>
+                                <td><input type="password" placeholder="your Password" name="userpassword" required></td>
+                            </tr>
+                        </table>
+                        <button type="submit" class="login-btn btn">로그인</button>
+                        <button type="button" class="sign-up-btn btn"><a href="/login/signup">회원가입</a></button>
+                </fieldset>
+            </div>
+        </form>
+    </body>
+</html>
