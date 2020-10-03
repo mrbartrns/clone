@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <div class="header">
+        <h1>Store</h1>
+    </div>
+    <div class="contents">
+        <ul class="catalog">
+            <li>Products</li>
+            <% products.forEach((item, index) => { %>
+                <li class="product" data-index="<%= item.index %>">
+                    <a href="#">
+                        <!-- <img src="chrome.png"> -->
+                        <h3><%= item.name %> </h3>
+                        <p><%= item.price %>원 </p>
+                        <span><%= item.count %>개 </span>
+                    </a>
+                    <button type="button" class="cart" data-index="<%= item.index %>">장바구니에 넣기</button>
+                    <button type="button" class="buy" data-index="<%= item.index %>" disabled>구매</button>
+                </li>
+            <% }); %> 
+        </ul>
+    </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = () => {
+        const socket = io.connect();
+        socket.on('count', (data) => {
+            const item = document.querySelector(`.product[data-index="${data.index}"]`);
+            const span = item.querySelector('span');
+            span.textContent = data.count;
+        });
+
+        const cartBtns = document.querySelectorAll('.cart');
+        cartBtns.forEach(cart => {
+            cart.addEventListener('click', (e) => {
+                console.log(e.target.parentNode.dataset.index);
+                socket.emit('cart',Number(e.target.parentNode.dataset.index));
+                const buyBtn = document.querySelector(`.buy[data-index="${e.target.dataset.index}"`);
+                buyBtn.disabled = false;
+                cart.disabled = true;
+                buyBtn.addEventListener('click',() => {
+                    socket.emit('buy', Number(e.target.parentNode.dataset.index));
+                    cart.disabled = false;
+                    buyBtn.disabled = true;
+                })
+            });
+        });
+    }
+</script>
+</body>
+</html>
