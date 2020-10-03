@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location tracker</title>
+</head>
+<body>
+    <div>
+        <div class="header">
+            <h1>Location tracker</h1>
+        </div>
+        <div class="content">
+            <div class="field">
+                <label for="text-input">Name</label>
+                <input type="text" id="text-input" required>
+            </div>
+            <a href="#tracker" id="tracker-link">Start Track</a>
+        </div>
+    </div>
+    <div id="tracker">
+        <div class="header">
+            <h1>Location Tracker</h1>
+        </div>
+        <div class="content">
+            <p class="status"></p>
+            <ul id="listview" data-role="listview" data-inset="true"></ul>
+        </div>
+    </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = () => {
+        const socket = io.connect();
+        const myId = document.querySelector('#text-input');
+        const tracker = document.querySelector('#tracker-link');
+        const status = document.querySelector('.status');
+        const listview = document.querySelector('#listview');
+
+        function getLocationSuccess(position) {
+            // handle position object
+            const userid = myId.value;
+            const location = {
+                name: userid,
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            }
+
+            socket.emit('location', location);
+        }
+
+        function getLocationFailed(error) {
+            // handle error
+            console.log(err);
+        }
+
+        socket.on('receive', data => {
+            // show data
+            console.log(data); // {latitude: , longitude:, date:,}
+            
+            const html = `
+                        <h3>lattitude: ${data.latitude}</h3>
+                        <h3>longitude: ${data.longitude}</h3>
+                        <p>${data.date}</p>
+                        `;
+            
+            const li = document.createElement('li');
+            li.innerHTML = html;
+
+            listview.appendChild(li);
+            const lis = listview.querySelectorAll('li');
+            if (lis.length <= 7) return;
+            [...lis].splice(lis.length - 1, 1);
+
+        });
+
+        tracker.addEventListener('click', () => {
+            socket.emit('join', myId.value);
+            if (!navigator.geolocation) {
+                status.textContent = "지원하지 않는 브라우저입니다.";
+            } else {
+                status.textContent = "위치정보를 가져오는 중 입니다..";
+                navigator.geolocation.watchPosition(getLocationSuccess, getLocationFailed);
+            }
+        });
+
+    }
+</script>
+</body>
+</html>
