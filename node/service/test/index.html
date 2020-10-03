@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form class="signup-form">
+        <input type="text" id="text">
+        <input type="submit" value="register">
+    </form>
+<script>
+    const form = document.querySelector('.signup-form');
+    const input = form.querySelector('#text');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // fetch시 무조건 object로 보낼 것
+        fetch('/test',{
+            method: 'POST',
+            body: JSON.stringify({
+                value: input.value
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => console.log(json));
+    })
+</script>
+</body>
+</html>
