@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= boardname %> 게시판</title>
+</head>
+<body>
+    <h1><%= boardname %> 게시판</h1>
+    <a href="/postarticle">글쓰기</a>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <th>User</th>
+                <th>Title</th>
+                <th>Views</th>
+                <th>Date</th>
+            </tr>
+            <!--ejs something-->    
+            <% if (!articles) { %>
+                <tr><td>게시판에 글이 없습니다.</td></tr>
+            <% } else { %>
+                <% articles.forEach(article => { %>
+                    <tr>
+                        <td><%= article.userid %></td>
+                        <td><%= article.title %></td>
+                        <td>0</td>
+                        <td><%= article.date %></td>
+                    </tr>
+                <% }); %>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

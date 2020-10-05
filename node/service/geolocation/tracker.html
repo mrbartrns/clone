@@ -66,11 +66,11 @@
             const li = document.createElement('li');
             li.innerHTML = html;
 
-            listview.appendChild(li);
+            // insert first child
+            listview.insertAdjacentElement('afterbegin', li);
             const lis = listview.querySelectorAll('li');
             if (lis.length <= 7) return;
-            [...lis].splice(lis.length - 1, 1);
-
+            lis[lis.length - 1].remove();
         });
 
         tracker.addEventListener('click', () => {

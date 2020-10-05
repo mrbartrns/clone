@@ -18,7 +18,7 @@ app.get('/tracker', (req, res) => {
     fs.readFile('tracker.html', 'utf8', (err, data) => {
         if (err) throw err;
         res.end(data);
-    })
+    });
 });
 
 // get - observer

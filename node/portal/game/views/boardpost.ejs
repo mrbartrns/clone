@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시하기</title>
+</head>
+<body>
+    <h1>글 게시하기</h1>
+    <form method="POST" action="/post/postarticle/post">
+        <label for="selectboard">게시판 선택</label>
+        <select id="selectboard" name="board">
+            <% boardNameList.forEach(board => { %>
+                <option value="<%= board.boardname %>" name="boardname"><%= board.boardname %></option>
+            <% }); %>
+        </select>
+        <div class="header">
+            <input type="text" name="userid" placeholder="id">
+            <input type="text" name="boardtitle" placeholder="title">
+        </div>
+        <div class="text-area">
+            <textarea aria-autocomplete="none" style="resize: none;" name="article" rows="30" cols="100"></textarea>
+            <input type="submit">
+        </div>
+    </form>
+</body>
+</html>
