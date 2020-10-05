@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="10">
+        <tr>
+            <td rowspan="3">
+                <canvas id="canvas" width="1200" height="800"></canvas>
+            </td>
+            <td height="200">
+                <!--색상 선택기-->
+                <input type="color" id="color-picker" vlaue="#000000">
+            </td>
+        </tr>
+        <tr>
+            <td height="25">
+                <input id="sliderA" type="range" min="0" max="20" value="5"><br>
+                <input id="sliderB" type="range" min="0" max="100">
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: orange;"></td>
+        </tr>
+    </table>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = () => {
+        const colorPicker = document.querySelector('#color-picker');
+        const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let mousedown = false;
+        let width = 5;
+        let opacity = 1.0;
+        let pressure = 1.0;
+        let color = '#000000';
+        let oldPoint, newPoint;
+
+        function Point(e) {
+            this.x = e.offsetX;
+            this.y = e.offsetY;
+        }
+
+        function chooseColor() {
+            color = this.value;
+        }
+
+        function draw(data) {
+            // color
+            ctx.strokeStyle = data.color;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = Number(data.width);
+
+            ctx.beginPath();
+            ctx.moveTo(data.x1, data.y1);
+            ctx.lineTo(data.x2, data.y2);
+            ctx.stroke();
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            mousedown = true;
+            oldPoint = new Point(e);
+        });
+        canvas.addEventListener('mousemove', (e) => {
+            if (!mousedown) return;
+            newPoint = new Point(e);
+            socket.emit('draw', {
+                width: width,
+                color: color,
+                x1: oldPoint.x,
+                y1: oldPoint.y,
+                x2: newPoint.x,
+                y2: newPoint.y
+            });
+
+            oldPoint = newPoint;
+        });
+        canvas.addEventListener('mouseup', () => mousedown = false);
+
+        colorPicker.addEventListener('input', chooseColor);
+
+
+
+        const socket = io.connect();
+        // 방을 연결
+        socket.emit('join', '<%= room %>');
+        // line: 남들이 그린 것을 받아서 내 캔버스에 표시
+        // draw: 내가 그린 것을 받아 남들 캔버스에 표시
+        socket.on('line', data => {
+            console.log(data);
+            draw(data);
+        });
+    }
+</script>
+</body>
+</html>

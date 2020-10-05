@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Catch mind</h1>
+    <span>Room: </span>
+    <input id="room" type="text">
+    <button type="button" class="create-room">Create Room</button>
+    <hr>
+    <div id="container">
+
+    </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = () => {
+        const socket = io.connect();
+        const roomId = document.querySelector('#room');
+        const roomBtn = document.querySelector('.create-room');
+        const container = document.querySelector('#container');
+
+        function joinRoom() {
+            const roomName = this.dataset.room;
+            location.href = `/canvas/${roomName}`;
+        }
+
+        function getRoom() {
+            fetch('/room')
+            .then(blob => blob.json())
+            .then(data => {
+                const list = [];
+                data.forEach(room => {
+                    list.push(room);
+                    const btn = document.createElement('button');
+                    btn.textContent = `Room Name: ${room}`;
+                    btn.setAttribute('data-room', room);
+                    container.insertAdjacentElement('afterbegin', btn);
+                    btn.addEventListener('click', joinRoom);
+                });
+            });
+        }
+
+        getRoom();
+
+        roomBtn.addEventListener('click', () => {
+            const roomName = roomId.value;
+            console.log(roomName);
+            socket.emit('createRoom', roomName);
+            location.href = `/canvas/${roomName}`;
+        });
+        
+        socket.on('createRoom', (room) => {
+            const btn = document.createElement('button');
+            btn.setAttribute('data-room', room);
+            btn.textContent = `Room Name: ${room}`;
+            container.insertAdjacentElement('afterbegin', btn);
+            btn.addEventListener('click', joinRoom);
+        });
+    }
+</script>
+</body>
+</html>
