@@ -11,17 +11,26 @@
         <label for="selectboard">게시판 선택</label>
         <select id="selectboard" name="board">
             <% boardNameList.forEach(board => { %>
-                <option value="<%= board.boardname %>" name="boardname"><%= board.boardname %></option>
+                <option id="<%= board.boardname %>"value="<%= board.boardname %>" name="boardname"><%= board.boardname %></option>
             <% }); %>
         </select>
         <div class="header">
-            <input type="text" name="userid" placeholder="id">
-            <input type="text" name="boardtitle" placeholder="title">
+            <input type="text" name="userid" placeholder="id" required>
+            <input type="text" name="boardtitle" placeholder="title" required>
         </div>
         <div class="text-area">
-            <textarea aria-autocomplete="none" style="resize: none;" name="article" rows="30" cols="100"></textarea>
+            <textarea aria-autocomplete="none" style="resize: none;" name="article" rows="30" cols="100" required></textarea>
             <input type="submit">
         </div>
     </form>
+<script>
+    // fetch('/post/postarticle/post', {
+    //     method: 'POST',
+    //     body: {
+    //         userid: document.qeurySelector('input[name="userid"]').value
+    //         boardname: document.querySelector('#')
+    //     }
+    // })
+</script>
 </body>
 </html>

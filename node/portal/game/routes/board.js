@@ -12,7 +12,7 @@ const client = mysql.createConnection({
 
 router.get('/:boardname', (req, res) => {
     const boardName = req.params.boardname;
-    client.query('SELECT boardname FROM boardnames where boardName=?', [boardName], (error, result) => {
+    client.query('SELECT boardname FROM boardnames where boardname=?', [boardName], (error, result) => {
         if (!result) {
             res.status(404);
             res.render('error');
@@ -29,18 +29,17 @@ router.get('/:boardname', (req, res) => {
     });
 });
 
-// show article article > 임의의 8자리 번호 1:1 매칭 후 번호와 article을 따로 저장
-router.get('/:articlenumber', (req, res) => {
-    const data = {};
-    client.query('SELECT * FROM articletexts WHERE articlenumber=?', [req.params.articlenumber], (error, result) => {
+// 콘텐츠 내용을 보여주는 라우터
+router.get('/:boardname/:articlenumber', (req, res) => {
+    let data = {};
+    client.query('SELECT * FROM articles WHERE boardname=? AND articlenumber=?', [req.params.boardname, req.params.articlenumber], (error, result) => {
         if (error) throw error;
-        data.articleNumber = result[0].articlenumber;
-        data.text = result[0].text;
-    });
-    client.query('SELECT * FROM articles WHERE articlenumber=?'[req.params.articlenumber], (error, result) => {
         data.title = result[0].title;
         data.userid = result[0].userid;
         data.date = result[0].date;
+        data.article = result[0].text;
+        data.articlenumber = result[0].articlenumber;
+        console.log(data);
         res.render('article', {data: data});
     });
 });
