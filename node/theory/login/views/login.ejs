@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- JSON.stringify(session) %>
+    <form action="/login" method="POST">
+        <label for="id">ID: </label>
+        <input type="text" id="id" name="id" placeholder="ID를 입력해주세요." required>
+        <br>
+        <label for="pw">Password: </label>
+        <input type="text" id="pw" name="pw" placeholder="비밀번호를 입력해주세요." required>
+        <button type="submit">로그인</button>
+    </form>
+    <a href="/signup">회원가입</a>
+</body>
+</html>

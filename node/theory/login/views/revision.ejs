@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인정보 수정</title>
+</head>
+<body>
+    <form action="/revise" method="POST">
+        <span id="id"><%= id %>님의 개인정보 수정</span>
+        <br>
+        <label for="pw">비밀번호: </label>
+        <input type="password" id="pw" name="pw" placeholder="Password 수정" required/>
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" placeholder="Email 수정">
+        <input type="submit">
+    </form>
+</body>
+</html>
